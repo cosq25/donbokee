@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ETF 한눈에 보기 | @donbokee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg-deep:#111118;
+  --bg-card:#1e1e2c;
+  --bg-card-hover:#282838;
+  --bg-elevated:#2c2c3e;
+  --pink:#e86c9e;
+  --pink-dark:#d4507f;
+  --pink-dim:rgba(232,108,158,0.15);
+  --pink-glow:rgba(232,108,158,0.25);
+  --white:#ffffff;
+  --gray-100:#f2f2f8;
+  --gray-200:#d4d4e0;
+  --gray-300:#aaaabc;
+  --gray-400:#888898;
+  --gray-500:#6a6a7c;
+  --border:#333345;
+  --border-light:#3d3d50;
+  --shadow:0 4px 20px rgba(0,0,0,0.3);
+  --shadow-pink:0 4px 16px rgba(232,108,158,0.25);
+  --radius:20px;
+  --radius-sm:14px;
+}
+body{
+  font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg-deep);color:var(--gray-100);
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.container{max-width:480px;margin:0 auto;padding:0 20px;}
+
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(17,17,24,0.9);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);padding:12px 20px;
+}
+.nav-inner{
+  max-width:480px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.nav-logo{font-size:15px;font-weight:800;color:var(--pink);display:flex;align-items:center;gap:8px;}
+.nav-logo img{width:36px;height:36px;border-radius:50%;object-fit:contain;}
+.nav-btns{display:flex;gap:8px;}
+.nav-btn{
+  padding:10px 20px;border-radius:12px;font-size:15px;font-weight:700;
+  border:none;cursor:pointer;font-family:inherit;transition:all 0.2s;
+}
+.nav-btn.outline{background:var(--bg-elevated);color:var(--gray-100);border:1.5px solid var(--gray-500);}
+.nav-btn.outline:hover{border-color:var(--pink);color:var(--pink);}
+.nav-btn.fill{background:var(--pink);color:var(--white);box-shadow:0 2px 12px rgba(232,108,158,0.3);}
+.nav-btn.fill:hover{background:var(--pink-dark);}
+
+/* HERO */
+.hero{text-align:center;padding:44px 0 40px;}
+.hero-character{width:110px;height:110px;margin:0 auto 18px;}
+.hero-character img{width:100%;height:100%;object-fit:contain;}
+.hero h1{font-size:36px;font-weight:900;color:var(--white);letter-spacing:-1px;line-height:1.25;}
+.hero-hl{color:var(--pink);}
+.hero-sub{font-size:16px;color:var(--gray-300);margin-top:12px;font-weight:500;}
+
+/* CTA */
+.cta-banner{text-align:center;padding:20px 0;}
+.cta-text{font-size:14px;color:var(--gray-400);font-weight:500;margin-bottom:10px;}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:transparent;color:var(--pink);
+  padding:11px 22px;border-radius:12px;
+  font-size:14px;font-weight:700;text-decoration:none;
+  border:1.5px solid var(--pink);cursor:pointer;font-family:inherit;
+  transition:all 0.2s;
+}
+.cta-btn:hover{background:var(--pink);color:var(--white);box-shadow:var(--shadow-pink);}
+.cta-btn:active{transform:scale(0.97);}
+.cta-btn img{width:28px;height:28px;border-radius:50%;object-fit:contain;}
+
+/* DIVIDER */
+.divider{height:8px;background:var(--bg-elevated);margin:12px -20px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+
+/* SECTION */
+.section{padding:40px 0 24px;}
+.section-title{font-size:26px;font-weight:900;color:var(--white);letter-spacing:-0.5px;margin-bottom:6px;}
+.section-sub{font-size:14px;color:var(--gray-400);margin-bottom:24px;font-weight:500;}
+
+/* TABS */
+.category-tabs{
+  display:flex;gap:8px;overflow-x:auto;padding:0 0 20px;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.category-tabs::-webkit-scrollbar{display:none;}
+.cat-tab{
+  flex-shrink:0;padding:10px 20px;border-radius:12px;
+  font-size:15px;font-weight:600;
+  background:var(--bg-card);color:var(--gray-400);
+  border:1px solid var(--border);
+  cursor:pointer;transition:all 0.2s;white-space:nowrap;
+}
+.cat-tab.active{background:var(--white);color:var(--bg-deep);border-color:var(--white);}
+
+/* ETF CARDS */
+.etf-list{display:flex;flex-direction:column;gap:14px;padding-bottom:8px;}
+.etf-card{
+  background:var(--bg-card);border-radius:var(--radius);
+  border:1px solid var(--border);overflow:hidden;
+  transition:all 0.25s;cursor:pointer;
+}
+.etf-card:hover{border-color:var(--border-light);background:var(--bg-card-hover);}
+.etf-card.expanded{border-color:var(--pink);box-shadow:0 0 0 1px var(--pink),var(--shadow);}
+
+.etf-card-header{padding:20px 20px 10px;display:flex;align-items:flex-start;gap:14px;}
+.etf-rank{
+  width:34px;height:34px;border-radius:10px;background:var(--pink-dim);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:800;color:var(--pink);flex-shrink:0;margin-top:2px;
+}
+.etf-card-left{flex:1;min-width:0;}
+.etf-name{font-size:17px;font-weight:700;color:var(--white);line-height:1.3;}
+.etf-index{font-size:13px;color:var(--gray-400);margin-top:3px;}
+
+.etf-card-right{text-align:right;flex-shrink:0;}
+.etf-return{font-size:26px;font-weight:900;color:var(--pink);letter-spacing:-0.5px;}
+.etf-return.negative{color:#ef4444;}
+.etf-return-label{font-size:12px;color:var(--gray-400);font-weight:500;margin-top:2px;}
+
+.etf-card-tags{display:flex;gap:6px;padding:4px 20px 16px 68px;flex-wrap:wrap;}
+.etf-tag{
+  font-size:12px;padding:5px 11px;border-radius:8px;font-weight:600;
+}
+.etf-tag:nth-child(1){background:rgba(96,165,250,0.15);color:#60a5fa;}
+.etf-tag:nth-child(2){background:rgba(168,132,246,0.15);color:#a884f6;}
+.etf-tag:nth-child(3){background:rgba(52,211,153,0.15);color:#34d399;}
+
+.expand-hint{text-align:center;padding:0 0 16px;font-size:13px;color:var(--gray-300);font-weight:500;}
+.etf-card.expanded .expand-hint{display:none;}
+
+/* DETAIL */
+.etf-detail{display:none;padding:0 20px 20px;border-top:1px solid var(--border);margin-top:4px;}
+.etf-card.expanded .etf-detail{display:block;animation:fadeIn 0.25s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.etf-detail-section{margin-top:18px;}
+.etf-detail-title{font-size:14px;font-weight:700;color:var(--pink);margin-bottom:8px;}
+.etf-detail-text{font-size:15px;color:var(--gray-200);line-height:1.75;}
+
+.etf-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+.etf-detail-stat{background:#323248;border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border-light);}
+.etf-detail-stat-label{font-size:12px;color:var(--gray-300);margin-bottom:4px;font-weight:500;}
+.etf-detail-stat-value{font-size:22px;font-weight:900;color:var(--white);}
+
+/* CALCULATOR */
+.calc-section{padding:40px 0 24px;}
+
+.calc-tabs{
+  display:flex;background:var(--bg-card);
+  border-radius:var(--radius-sm);padding:4px;margin-bottom:24px;
+  border:1px solid var(--border);
+}
+.calc-tab{
+  flex:1;padding:12px;text-align:center;font-size:15px;font-weight:600;
+  border-radius:11px;cursor:pointer;transition:all 0.2s;color:var(--gray-400);
+}
+.calc-tab.active{background:var(--bg-elevated);color:var(--white);}
+
+.calc-form{
+  background:var(--bg-card);border-radius:var(--radius);
+  border:1px solid var(--border);padding:24px;
+}
+.calc-field{margin-bottom:24px;}
+.calc-label{font-size:16px;font-weight:700;color:var(--white);margin-bottom:12px;display:block;}
+
+.calc-input-wrap{
+  display:flex;align-items:center;
+  background:var(--bg-elevated);border:1px solid var(--border);
+  border-radius:var(--radius-sm);overflow:hidden;transition:all 0.2s;
+}
+.calc-input-wrap:focus-within{border-color:var(--pink);box-shadow:0 0 0 3px var(--pink-dim);}
+
+.calc-input{
+  flex:1;border:none;padding:16px 18px;font-size:24px;font-weight:800;
+  font-family:inherit;color:var(--white);outline:none;background:transparent;min-width:0;
+}
+.calc-input::placeholder{color:var(--gray-500);font-weight:500;}
+.calc-input-unit{padding:16px 18px 16px 0;font-size:16px;font-weight:600;color:var(--gray-400);}
+
+.calc-presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.calc-preset{
+  padding:9px 16px;border-radius:10px;font-size:14px;font-weight:600;
+  background:var(--bg-elevated);color:var(--gray-300);
+  border:1px solid var(--border);cursor:pointer;transition:all 0.2s;
+}
+.calc-preset:hover,.calc-preset.active{background:var(--pink);color:var(--white);border-color:var(--pink);}
+
+.calc-etf-select{display:flex;flex-direction:column;gap:8px;}
+.calc-etf-option{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px;border-radius:var(--radius-sm);
+  background:var(--bg-elevated);border:1px solid var(--border);
+  cursor:pointer;transition:all 0.2s;
+}
+.calc-etf-option.selected{border-color:var(--pink);background:var(--pink-dim);box-shadow:0 0 0 1px var(--pink);}
+.calc-etf-option-name{font-size:15px;font-weight:600;color:var(--white);}
+.calc-etf-option-return{font-size:16px;font-weight:800;color:var(--pink);}
+
+.calc-btn{
+  width:100%;padding:18px;
+  background:var(--pink);color:var(--white);
+  border:none;border-radius:var(--radius-sm);
+  font-size:17px;font-weight:700;font-family:inherit;
+  cursor:pointer;transition:all 0.2s;margin-top:4px;
+  box-shadow:var(--shadow-pink);
+}
+.calc-btn:hover{background:var(--pink-dark);transform:translateY(-1px);}
+.calc-btn:active{transform:scale(0.97);}
+
+/* RESULT */
+.calc-result{
+  display:none;margin-top:24px;border-radius:var(--radius);
+  overflow:hidden;border:1px solid var(--pink);
+  box-shadow:0 0 0 1px var(--pink),0 8px 32px rgba(232,108,158,0.2);
+}
+.calc-result.show{display:block;animation:popUp 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes popUp{from{opacity:0;transform:translateY(12px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.calc-result-header{
+  background:linear-gradient(135deg,var(--pink),var(--pink-dark));
+  padding:32px 24px;text-align:center;color:var(--white);position:relative;overflow:hidden;
+}
+.calc-result-header::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:120px;height:120px;background:rgba(255,255,255,0.08);border-radius:50%;
+}
+.calc-result-header::after{
+  content:'';position:absolute;bottom:-20px;left:-20px;
+  width:80px;height:80px;background:rgba(255,255,255,0.05);border-radius:50%;
+}
+.calc-result-label{font-size:14px;opacity:0.85;margin-bottom:8px;font-weight:500;}
+.calc-result-amount{font-size:42px;font-weight:900;letter-spacing:-1.5px;position:relative;z-index:1;}
+.calc-result-sub{font-size:13px;opacity:0.7;margin-top:8px;}
+
+.calc-result-body{padding:20px 24px;background:var(--bg-card);}
+.calc-result-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 0;border-bottom:1px solid var(--border);
+}
+.calc-result-row:last-child{border-bottom:none;}
+.calc-result-row-label{font-size:15px;color:var(--gray-400);}
+.calc-result-row-value{font-size:17px;font-weight:700;color:var(--white);}
+.calc-result-row-value.profit{color:var(--pink);}
+
+/* FOOTER */
+.footer{text-align:center;padding:28px 0 44px;}
+.footer-notice{
+  font-size:13px;color:var(--gray-400);line-height:1.75;
+  margin-bottom:20px;background:var(--bg-card);
+  border-radius:var(--radius-sm);padding:20px;
+  border:1px solid var(--border);text-align:left;
+}
+.footer-notice strong{color:var(--gray-200);font-weight:700;}
+.footer-date{font-size:12px;color:var(--gray-500);margin-top:12px;}
+
+.no-results{text-align:center;padding:40px 20px;color:var(--gray-400);font-size:16px;}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><img src="img/heart.png" alt="">donbokee</div>
+    <div class="nav-btns">
+      <button class="nav-btn outline" onclick="scrollTo_('compare')">비교표</button>
+      <button class="nav-btn fill" onclick="scrollTo_('calc')">계산기</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="hero-character"><img src="img/channel.png" alt="donbokee"></div>
+    <h1><span class="hero-hl">ETF</span> 한눈에 보기</h1>
+    <p class="hero-sub">제대로 알아야 제대로 투자할 수 있어</p>
+  </div>
+
+  <div class="cta-banner">
+    <p class="cta-text">제대로 투자하고 싶다면</p>
+    <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+      <img src="img/hi.png" alt=""> @donbokee 팔로우
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section" id="compare">
+    <h2 class="section-title">비교표</h2>
+    <p class="section-sub">눌러서 자세히 확인해봐</p>
+    <div class="category-tabs" id="categoryTabs">
+      <button class="cat-tab active" data-cat="all">전체</button>
+      <button class="cat-tab" data-cat="beginner">입문</button>
+      <button class="cat-tab" data-cat="us">미국</button>
+      <button class="cat-tab" data-cat="kr">국내</button>
+      <button class="cat-tab" data-cat="dividend">배당</button>
+      <button class="cat-tab" data-cat="sector">섹터</button>
+      <button class="cat-tab" data-cat="bond">안전자산</button>
+    </div>
+    <div class="etf-list" id="etfList"></div>
+  </div>
+
+  <div class="cta-banner">
+    <p class="cta-text">함께 공부하고 부자되고 싶다면</p>
+    <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+      <img src="img/hi.png" alt=""> @donbokee 팔로우
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="calc-section" id="calc">
+    <h2 class="section-title">예상 투자금 계산기</h2>
+    <p class="section-sub">직접 넣어보고 확인해봐</p>
+    <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:12px;padding:12px 16px;margin-bottom:24px;font-size:13px;color:#f5c862;line-height:1.6;font-weight:500;">⚠️ 수익률은 대략적인 과거 연평균 데이터이며, 실제 수익률은 시장 상황에 따라 달라질 수 있어요.</div>
+
+    <div class="calc-tabs">
+      <div class="calc-tab active" data-mode="monthly">매달 적립</div>
+      <div class="calc-tab" data-mode="lump">목돈 투자</div>
+    </div>
+
+    <div class="calc-form">
+      <div class="calc-field">
+        <label class="calc-label">어떤 ETF에 넣을까?</label>
+        <div class="calc-etf-select" id="calcEtfSelect"></div>
+      </div>
+      <div class="calc-field" id="monthlyField">
+        <label class="calc-label">매달 얼마씩?</label>
+        <div class="calc-input-wrap">
+          <input type="number" class="calc-input" id="monthlyAmount" placeholder="30" inputmode="numeric">
+          <span class="calc-input-unit">만원</span>
+        </div>
+        <div class="calc-presets" id="monthlyPresets">
+          <button class="calc-preset" data-val="10">10만원</button>
+          <button class="calc-preset" data-val="30">30만원</button>
+          <button class="calc-preset" data-val="50">50만원</button>
+          <button class="calc-preset" data-val="100">100만원</button>
+        </div>
+      </div>
+      <div class="calc-field" id="lumpField" style="display:none;">
+        <label class="calc-label">얼마를 넣을까?</label>
+        <div class="calc-input-wrap">
+          <input type="number" class="calc-input" id="lumpAmount" placeholder="1000" inputmode="numeric">
+          <span class="calc-input-unit">만원</span>
+        </div>
+        <div class="calc-presets" id="lumpPresets">
+          <button class="calc-preset" data-val="500">500만원</button>
+          <button class="calc-preset" data-val="1000">1천만원</button>
+          <button class="calc-preset" data-val="3000">3천만원</button>
+          <button class="calc-preset" data-val="5000">5천만원</button>
+        </div>
+      </div>
+      <div class="calc-field">
+        <label class="calc-label">몇 년 동안?</label>
+        <div class="calc-input-wrap">
+          <input type="number" class="calc-input" id="periodYears" placeholder="10" inputmode="numeric">
+          <span class="calc-input-unit">년</span>
+        </div>
+        <div class="calc-presets" id="periodPresets">
+          <button class="calc-preset" data-val="5">5년</button>
+          <button class="calc-preset" data-val="10">10년</button>
+          <button class="calc-preset" data-val="20">20년</button>
+          <button class="calc-preset" data-val="30">30년</button>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calculate()">수익 계산하기 →</button>
+    </div>
+
+    <div class="calc-result" id="calcResult">
+      <div class="calc-result-header">
+        <div class="calc-result-label" id="resultLabel"></div>
+        <div class="calc-result-amount" id="resultAmount"></div>
+        <div class="calc-result-sub" id="resultSub"></div>
+      </div>
+      <div class="calc-result-body" id="resultBody"></div>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <p class="cta-text">앞으로 유용한 재테크 정보 받고싶다면</p>
+    <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+      <img src="img/hi.png" alt=""> @donbokee 팔로우
+    </a>
+  </div>
+
+  <div class="footer">
+    <div class="footer-notice">
+      <strong>⚠️ 투자 유의사항</strong><br><br>
+      본 자료는 과거 연평균 수익률 기준 시뮬레이션이며, 투자를 권유하거나 추천하는 것이 아닙니다. 실제 수익률은 시장 상황에 따라 달라질 수 있으며, 모든 투자 판단과 책임은 본인에게 있습니다.
+      <div class="footer-date">수익률 데이터: 대략적인 과거 연평균 기준</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const etfs=[
+{id:'sp500',name:'KODEX 미국S&P500',index:'S&P 500 지수 추종',category:['beginner','us'],returnRate:11.5,returnLabel:'연평균 5년',tags:['초저보수','분기배당','대형'],description:'미국 대표 500개 기업에 한 번에 투자하는 ETF야. 애플, 마이크로소프트, 엔비디아 같은 빅테크부터 금융, 헬스케어까지 다 들어있어. "미국 경제 통째로 사는 것"이라고 보면 돼.',pros:'국내 최저 수준 보수, 분산투자 효과, 원화로 미국 투자',cons:'환율 변동 리스크, 빅테크 비중 높아 기술주 하락 시 영향',stats:{return1y:'+8.2%',return3y:'+32.5%',return5y:'+72%',fee:'연 0.0062%'}},
+{id:'nasdaq',name:'KODEX 미국나스닥100',index:'나스닥 100 지수 추종',category:['beginner','us'],returnRate:18.5,returnLabel:'연평균 5년',tags:['초저보수','성장형','분기배당'],description:'미국 기술주 100개에 집중 투자하는 ETF. 애플, 구글, 아마존, 메타, 엔비디아 등 AI·테크 기업이 대부분. S&P500보다 수익률 높지만 변동성도 커.',pros:'높은 성장성, AI/테크 중심, 초저보수',cons:'기술주 편중, 변동성 큼, 하락장 낙폭 클 수 있음',stats:{return1y:'+10.5%',return3y:'+38%',return5y:'+130%',fee:'연 0.0062%'}},
+{id:'dividend-dow',name:'KODEX 미국배당다우존스',index:'Dow Jones US Dividend 100',category:['beginner','dividend'],returnRate:9.0,returnLabel:'연평균 5년',tags:['월배당','안정형','저보수'],description:'미국에서 10년 이상 꾸준히 배당 늘린 기업 100개에 투자해. 매달 배당금이 들어오는 월배당 ETF라서 현금흐름 필요한 사람에게 딱. 기술주보다 변동성 낮아서 안정적.',pros:'매월 배당 수령, 안정적 현금흐름, 낮은 변동성',cons:'성장성 나스닥보다 낮음, 배당금 세금 발생',stats:{return1y:'+6.8%',return3y:'+25%',return5y:'+55%',fee:'연 0.01%'}},
+{id:'tiger-dividend',name:'TIGER 배당+7%프리미엄다우존스',index:'Dow Jones + 커버드콜',category:['dividend'],returnRate:7.5,returnLabel:'연 배당률',tags:['고배당 7%+','월배당','커버드콜'],description:'배당 기업에 투자하면서 커버드콜 전략으로 추가 수익을 만드는 ETF. 연 7% 이상 배당을 목표로 해. 대신 주가가 크게 오를 때 수익이 제한될 수 있어.',pros:'높은 배당수익률, 매월 현금흐름, 횡보장에 유리',cons:'상승장에서 수익 제한, 보수 높음, 원금 손실 가능',stats:{return1y:'+5.2%',return3y:'-',return5y:'-',fee:'연 0.39%'}},
+{id:'kodex200',name:'KODEX 200',index:'KOSPI 200 지수 추종',category:['beginner','kr'],returnRate:5.5,returnLabel:'연평균 5년',tags:['국내대표','저보수','대형'],description:'한국 대표 200개 기업에 투자하는 ETF. 삼성전자, SK하이닉스, 현대차 같은 대형주 포함. 국내 주식시장 전체 흐름을 따라가는 기본 중의 기본.',pros:'국내 시장 대표, 거래량 풍부, 매우 낮은 보수',cons:'한국 시장 성장성 제한, 미국 대비 수익률 낮은 편',stats:{return1y:'+3.5%',return3y:'+12%',return5y:'+30%',fee:'연 0.015%'}},
+{id:'kodex-semi',name:'KODEX 반도체',index:'KRX 반도체 지수',category:['kr','sector'],returnRate:12.0,returnLabel:'연평균 5년',tags:['반도체','고성장','변동성↑'],description:'삼성전자, SK하이닉스 등 한국 반도체 핵심 기업에 집중 투자. AI 시대에 반도체 수요 폭발하면서 주목받는 섹터. 변동성 크지만 장기 성장성 높아.',pros:'AI/반도체 성장 수혜, 높은 수익률 가능',cons:'특정 섹터 집중 리스크, 변동성 매우 큼',stats:{return1y:'+15%',return3y:'+28%',return5y:'+85%',fee:'연 0.09%'}},
+{id:'tiger-tech',name:'TIGER 미국테크TOP10',index:'Indxx US Tech Top10',category:['us','sector'],returnRate:22.0,returnLabel:'연평균 3년',tags:['빅테크 집중','고수익','변동성↑'],description:'애플, 엔비디아, 마이크로소프트 등 미국 빅테크 10개만 골라서 집중 투자. 나스닥100보다 더 공격적. AI 성장에 베팅하고 싶은 사람에게 맞아.',pros:'빅테크 집중 고수익 가능, AI 성장 수혜',cons:'10개 종목 집중 리스크, 보수 높음, 변동성 큼',stats:{return1y:'+12%',return3y:'+95%',return5y:'-',fee:'연 0.49%'}},
+{id:'sp500-equal',name:'TIGER 미국S&P500동일가중',index:'S&P 500 Equal Weight',category:['us'],returnRate:10.0,returnLabel:'연평균 5년',tags:['동일가중','분산효과↑','분기배당'],description:'일반 S&P500은 빅테크 비중이 높은데, 이건 500개 기업을 동일하게 투자해. 빅테크 쏠림이 걱정되면 이게 나아. 중소형주도 고르게 반영.',pros:'빅테크 편중 없음, 진짜 분산투자, 중소형주 수혜',cons:'빅테크 급등기에 수익률 뒤처짐, 보수 조금 높음',stats:{return1y:'+5%',return3y:'+22%',return5y:'+60%',fee:'연 0.12%'}},
+{id:'bond',name:'KODEX 미국채10년선물',index:'미국 10년 국채 선물',category:['bond'],returnRate:3.5,returnLabel:'연평균 5년',tags:['안전자산','채권','저보수'],description:'미국 10년 국채에 투자하는 ETF. 주식이 폭락할 때 보통 채권은 올라. 주식 100%가 불안하면 포트폴리오에 채권 섞는 용도. 금리 인하기에 유리.',pros:'안전자산, 주식과 반대 움직임, 금리 인하 시 수혜',cons:'수익률 낮음, 금리 상승기 손실, 환율 리스크',stats:{return1y:'+2%',return3y:'+5%',return5y:'+18%',fee:'연 0.09%'}},
+{id:'gold',name:'KODEX 골드선물(H)',index:'금 선물 가격 추종',category:['bond'],returnRate:10.0,returnLabel:'연평균 5년',tags:['금','인플레 헤지','환헤지'],description:'금 가격을 따라가는 ETF. 인플레이션이나 경제 위기 때 금값이 오르는 경향. 주식이랑 다른 움직임을 보여서 분산투자 효과 좋아. 환헤지 적용.',pros:'인플레 방어, 위기 시 안전자산, 환헤지 적용',cons:'배당 없음, 장기 수익률 주식보다 낮을 수 있음',stats:{return1y:'+28%',return3y:'+55%',return5y:'+65%',fee:'연 0.09%'}}
+];
+
+let currentCat='all',expandedId=null;
+
+function renderList(){
+  const list=document.getElementById('etfList');
+  const f=currentCat==='all'?etfs:etfs.filter(e=>e.category.includes(currentCat));
+  if(!f.length){list.innerHTML='<div class="no-results">해당 카테고리에 ETF가 없어요</div>';return;}
+  list.innerHTML=f.map((e,i)=>`
+    <div class="etf-card ${expandedId===e.id?'expanded':''}" onclick="toggle('${e.id}')">
+      <div class="etf-card-header">
+        <div class="etf-rank">${i+1}</div>
+        <div class="etf-card-left">
+          <div class="etf-name">${e.name}</div>
+          <div class="etf-index">${e.index}</div>
+        </div>
+        <div class="etf-card-right">
+          <div class="etf-return ${e.returnRate<0?'negative':''}">${e.returnRate>=0?'+':''}${e.returnRate}%</div>
+          <div class="etf-return-label">${e.returnLabel}</div>
+        </div>
+      </div>
+      <div class="etf-card-tags">${e.tags.map(t=>`<span class="etf-tag">${t}</span>`).join('')}</div>
+      ${expandedId!==e.id?'<div class="expand-hint">눌러서 자세히 보기 ↓</div>':''}
+      <div class="etf-detail">
+        <div class="etf-detail-section"><div class="etf-detail-title">💡 이게 뭔데?</div><div class="etf-detail-text">${e.description}</div></div>
+        <div class="etf-detail-grid">
+          <div class="etf-detail-stat"><div class="etf-detail-stat-label">1년 수익률</div><div class="etf-detail-stat-value">${e.stats.return1y}</div></div>
+          <div class="etf-detail-stat"><div class="etf-detail-stat-label">3년 수익률</div><div class="etf-detail-stat-value">${e.stats.return3y}</div></div>
+          <div class="etf-detail-stat"><div class="etf-detail-stat-label">5년 수익률</div><div class="etf-detail-stat-value">${e.stats.return5y}</div></div>
+          <div class="etf-detail-stat"><div class="etf-detail-stat-label">총보수</div><div class="etf-detail-stat-value">${e.stats.fee}</div></div>
+        </div>
+        <div class="etf-detail-section"><div class="etf-detail-title">👍 장점</div><div class="etf-detail-text">${e.pros}</div></div>
+        <div class="etf-detail-section"><div class="etf-detail-title">⚠️ 주의할 점</div><div class="etf-detail-text">${e.cons}</div></div>
+      </div>
+    </div>`).join('');
+}
+
+function toggle(id){expandedId=expandedId===id?null:id;renderList();}
+
+document.getElementById('categoryTabs').addEventListener('click',e=>{
+  const t=e.target.closest('.cat-tab');if(!t)return;
+  document.querySelectorAll('.cat-tab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');currentCat=t.dataset.cat;expandedId=null;renderList();
+});
+
+function scrollTo_(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+
+let calcMode='monthly',selectedEtfId='sp500';
+
+function renderCalcEtfs(){
+  const picks=['sp500','nasdaq','dividend-dow','kodex200'];
+  document.getElementById('calcEtfSelect').innerHTML=picks.map(id=>{
+    const e=etfs.find(x=>x.id===id);
+    return`<div class="calc-etf-option ${selectedEtfId===id?'selected':''}" data-id="${id}">
+      <span class="calc-etf-option-name">${e.name}</span>
+      <span class="calc-etf-option-return">연 ${e.returnRate}%</span></div>`;
+  }).join('');
+}
+
+document.getElementById('calcEtfSelect').addEventListener('click',e=>{
+  const o=e.target.closest('.calc-etf-option');if(!o)return;
+  selectedEtfId=o.dataset.id;renderCalcEtfs();
+});
+
+document.querySelectorAll('.calc-tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.calc-tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');calcMode=t.dataset.mode;
+    document.getElementById('monthlyField').style.display=calcMode==='monthly'?'block':'none';
+    document.getElementById('lumpField').style.display=calcMode==='lump'?'block':'none';
+    document.getElementById('calcResult').classList.remove('show');
+  });
+});
+
+document.querySelectorAll('.calc-presets').forEach(g=>{
+  g.addEventListener('click',e=>{
+    const b=e.target.closest('.calc-preset');if(!b)return;
+    const v=b.dataset.val;
+    if(g.id==='monthlyPresets')document.getElementById('monthlyAmount').value=v;
+    else if(g.id==='lumpPresets')document.getElementById('lumpAmount').value=v;
+    else if(g.id==='periodPresets')document.getElementById('periodYears').value=v;
+    g.querySelectorAll('.calc-preset').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+  });
+});
+
+function calculate(){
+  const e=etfs.find(x=>x.id===selectedEtfId);if(!e)return;
+  const y=parseInt(document.getElementById('periodYears').value)||10;
+  const r=e.returnRate/100,mr=r/12,m=y*12;
+  let inv,fin;
+  if(calcMode==='monthly'){
+    const mo=(parseInt(document.getElementById('monthlyAmount').value)||30)*10000;
+    inv=mo*m;fin=mo*((Math.pow(1+mr,m)-1)/mr);
+  }else{
+    const lu=(parseInt(document.getElementById('lumpAmount').value)||1000)*10000;
+    inv=lu;fin=lu*Math.pow(1+r,y);
+  }
+  const profit=fin-inv,pRate=((profit/inv)*100).toFixed(1);
+  const res=document.getElementById('calcResult');res.classList.add('show');
+  document.getElementById('resultLabel').textContent=`${y}년 후 예상 금액`;
+  document.getElementById('resultAmount').textContent=fmt(fin);
+  document.getElementById('resultSub').textContent=`${e.name} 기준 · 연 ${e.returnRate}%`;
+  document.getElementById('resultBody').innerHTML=`
+    <div class="calc-result-row"><span class="calc-result-row-label">총 투자 원금</span><span class="calc-result-row-value">${fmt(inv)}</span></div>
+    <div class="calc-result-row"><span class="calc-result-row-label">예상 수익</span><span class="calc-result-row-value profit">+${fmt(profit)}</span></div>
+    <div class="calc-result-row"><span class="calc-result-row-label">수익률</span><span class="calc-result-row-value profit">+${pRate}%</span></div>`;
+  res.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function fmt(n){
+  if(n>=1e8){const u=Math.floor(n/1e8),w=Math.floor((n%1e8)/1e4);return w>0?`${u}억 ${w.toLocaleString()}만원`:`${u}억원`;}
+  if(n>=1e4)return`${Math.floor(n/1e4).toLocaleString()}만원`;
+  return`${Math.floor(n).toLocaleString()}원`;
+}
+
+renderList();renderCalcEtfs();
+</script>
+</body>
+</html>
