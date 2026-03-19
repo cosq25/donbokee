@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>반드시 가입해야 할 절세계좌 3가지 | @donbokee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2') format('woff2');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg-deep:#111118;
+  --bg-card:#1e1e2c;
+  --bg-card-hover:#282838;
+  --bg-elevated:#2c2c3e;
+  --pink:#e86c9e;
+  --pink-dark:#d4507f;
+  --pink-dim:rgba(232,108,158,0.15);
+  --pink-glow:rgba(232,108,158,0.25);
+  --white:#ffffff;
+  --gray-100:#f2f2f8;
+  --gray-200:#d4d4e0;
+  --gray-300:#aaaabc;
+  --gray-400:#9a9ab0;
+  --gray-500:#7e7e96;
+  --green:#34d399;
+  --green-dim:rgba(52,211,153,0.15);
+  --border:#333345;
+  --border-light:#3d3d50;
+  --shadow:0 4px 20px rgba(0,0,0,0.3);
+  --shadow-pink:0 4px 16px rgba(232,108,158,0.25);
+  --radius:20px;
+  --radius-sm:14px;
+}
+
+body{
+  font-family:'Paperlogy','Noto Sans KR',-apple-system,sans-serif;
+  background:var(--bg-deep);
+  color:var(--gray-100);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.container{max-width:480px;margin:0 auto;padding:0 20px;}
+
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(17,17,24,0.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:12px 20px;
+}
+.nav-inner{max-width:480px;margin:0 auto;display:flex;align-items:center;gap:10px;}
+.nav-logo{font-size:15px;font-weight:800;color:var(--pink);display:flex;align-items:center;gap:8px;}
+.nav-logo img{width:36px;height:36px;border-radius:50%;object-fit:contain;}
+
+/* HERO */
+.hero{text-align:center;padding:40px 0 28px;}
+.hero-character{width:110px;height:110px;margin:0 auto 20px;}
+.hero-character img{width:100%;height:100%;object-fit:contain;}
+.hero-eyebrow{
+  font-size:13px;font-weight:700;
+  color:var(--pink);letter-spacing:0.06em;
+  margin-bottom:12px;
+}
+.hero h1{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:32px;font-weight:800;
+  color:var(--white);
+  letter-spacing:-0.5px;line-height:1.35;
+}
+.hero-hl{color:var(--pink);}
+.hero-sub{font-size:15px;color:var(--gray-300);margin-top:12px;font-weight:500;line-height:1.6;}
+
+/* CTA */
+.cta-banner{text-align:center;padding:20px 0 4px;}
+.cta-text{font-size:13px;color:var(--gray-400);font-weight:500;margin-bottom:10px;}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:transparent;color:var(--pink);
+  padding:11px 22px;border-radius:12px;
+  font-size:14px;font-weight:700;
+  text-decoration:none;border:1.5px solid var(--pink);
+  cursor:pointer;font-family:inherit;transition:all 0.2s;
+}
+.cta-btn:hover{background:var(--pink);color:var(--white);box-shadow:var(--shadow-pink);}
+.cta-btn img{width:24px;height:24px;border-radius:50%;object-fit:contain;}
+
+/* TABS */
+.main-tabs{
+  display:flex;gap:8px;
+  margin:24px 0 0;
+  padding:0;
+}
+.main-tab{
+  flex:1;padding:13px 0;
+  border-radius:14px;
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:15px;font-weight:700;text-align:center;
+  background:var(--bg-card);color:var(--gray-400);
+  border:1.5px solid var(--border);
+  cursor:pointer;transition:all 0.2s;
+}
+.main-tab.active{
+  background:var(--pink);color:var(--white);
+  border-color:var(--pink);box-shadow:var(--shadow-pink);
+}
+
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+.section{padding:24px 0 12px;}
+.section-title{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:24px;font-weight:800;
+  color:var(--white);letter-spacing:-0.5px;margin-bottom:6px;
+}
+.section-sub{font-size:14px;color:var(--gray-400);margin-bottom:24px;font-weight:500;}
+
+/* ===== ACCOUNT CARDS ===== */
+.account-list{display:flex;flex-direction:column;gap:16px;}
+
+.account-card{
+  background:var(--bg-card);
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  overflow:hidden;
+}
+.account-card-header{
+  padding:22px 22px 14px;
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:12px;
+}
+.account-card-left{}
+.account-rank{
+  font-size:12px;font-weight:700;
+  color:var(--pink);letter-spacing:0.06em;
+  margin-bottom:6px;
+}
+.account-name{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:24px;font-weight:800;color:var(--white);
+}
+.account-badge{
+  background:var(--pink-dim);color:var(--pink);
+  font-size:12px;font-weight:700;
+  padding:5px 12px;border-radius:20px;
+  white-space:nowrap;margin-top:4px;
+  display:inline-block;
+}
+.account-desc{
+  padding:0 22px 16px;
+  font-size:14px;color:var(--gray-300);
+  line-height:1.75;border-bottom:1px solid var(--border);
+}
+.account-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:8px;padding:16px 22px;
+}
+.account-stat{
+  background:var(--bg-elevated);
+  border-radius:var(--radius-sm);padding:14px;
+}
+.account-stat-label{
+  font-size:11px;color:var(--gray-500);
+  font-weight:600;margin-bottom:5px;
+}
+.account-stat-value{
+  font-size:14px;font-weight:700;
+  color:var(--gray-100);line-height:1.4;
+}
+.account-stat-value.pink{color:var(--pink);}
+.account-stat-value.green{color:var(--green);}
+
+.account-warn{
+  margin:0 22px 18px;
+  background:rgba(232,108,158,0.08);
+  border-left:3px solid var(--pink);
+  border-radius:0 10px 10px 0;
+  padding:12px 14px;
+  font-size:13px;color:var(--gray-300);
+  line-height:1.65;font-weight:500;
+}
+
+/* SUMMARY BOX */
+.summary-box{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px 22px;
+  margin-top:8px;
+  text-align:center;
+}
+.summary-title{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:16px;font-weight:700;
+  color:var(--gray-300);margin-bottom:16px;
+}
+.summary-rows{display:flex;flex-direction:column;gap:10px;}
+.summary-row{
+  display:flex;justify-content:space-between;
+  align-items:center;
+  background:var(--bg-elevated);
+  border-radius:12px;padding:14px 18px;
+}
+.summary-row-label{font-size:14px;font-weight:600;color:var(--gray-200);}
+.summary-row-val{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:16px;font-weight:800;color:var(--pink);
+}
+.summary-total{
+  margin-top:14px;
+  background:var(--pink-dim);
+  border:1px solid rgba(232,108,158,0.3);
+  border-radius:14px;padding:16px 20px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.summary-total-label{font-size:14px;font-weight:700;color:var(--gray-200);}
+.summary-total-val{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:22px;font-weight:800;color:var(--pink);
+}
+
+/* ===== CALCULATOR ===== */
+.calc-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px 22px;
+  margin-bottom:16px;
+}
+.calc-eyebrow{
+  font-size:11px;font-weight:700;
+  color:var(--pink);letter-spacing:0.08em;
+  margin-bottom:6px;
+}
+.calc-title{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:17px;font-weight:800;
+  color:var(--white);margin-bottom:4px;
+}
+.calc-sub{
+  font-size:13px;color:var(--gray-400);
+  margin-bottom:20px;font-weight:500;
+}
+
+.acc-rows{display:flex;flex-direction:column;gap:10px;}
+.acc-row{
+  display:flex;align-items:center;gap:10px;
+  background:var(--bg-elevated);
+  border-radius:12px;padding:13px 16px;
+  border:1.5px solid transparent;
+  transition:border-color 0.15s;
+}
+.acc-row:focus-within{border-color:var(--pink);}
+.acc-tag{
+  font-size:13px;font-weight:700;
+  color:var(--pink);min-width:60px;
+}
+.acc-input{
+  flex:1;border:none;background:none;
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:18px;font-weight:800;
+  color:var(--white);text-align:right;outline:none;
+}
+.acc-unit{
+  font-size:13px;color:var(--gray-400);font-weight:600;
+}
+
+/* rate slider */
+.rate-row{
+  display:flex;justify-content:space-between;
+  align-items:center;margin-bottom:12px;
+}
+.rate-label{font-size:14px;font-weight:700;color:var(--gray-200);}
+.rate-val{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:26px;font-weight:800;color:var(--pink);
+}
+input[type=range]{
+  -webkit-appearance:none;
+  width:100%;height:6px;
+  border-radius:4px;
+  background:var(--bg-elevated);
+  outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:26px;height:26px;border-radius:50%;
+  background:var(--pink);
+  box-shadow:0 2px 12px rgba(232,108,158,0.5);
+  transition:transform 0.15s;
+}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15);}
+.slider-ends{
+  display:flex;justify-content:space-between;
+  margin-top:6px;font-size:11px;color:var(--gray-500);
+}
+
+/* RESULT */
+.result-hero{
+  background:linear-gradient(135deg,#2a1a24 0%,#1e1e2c 100%);
+  border:1px solid rgba(232,108,158,0.3);
+  border-radius:var(--radius);
+  padding:28px 24px;
+  margin-bottom:16px;
+  position:relative;overflow:hidden;
+}
+.result-hero::before{
+  content:'';position:absolute;
+  top:-50px;right:-50px;
+  width:160px;height:160px;border-radius:50%;
+  background:rgba(232,108,158,0.08);
+}
+.result-eyebrow{
+  font-size:11px;font-weight:700;
+  color:var(--pink);letter-spacing:0.08em;
+  margin-bottom:8px;position:relative;z-index:1;
+}
+.result-big{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:44px;font-weight:800;
+  color:var(--white);line-height:1;
+  margin-bottom:6px;position:relative;z-index:1;
+}
+.result-big span{font-size:22px;color:var(--gray-300);}
+.result-note{
+  font-size:12px;color:var(--gray-500);
+  margin-bottom:20px;position:relative;z-index:1;
+}
+.result-subrow{
+  display:flex;justify-content:space-between;
+  padding-top:18px;
+  border-top:1px solid var(--border);
+  position:relative;z-index:1;
+}
+.result-sub-label{font-size:11px;color:var(--gray-500);margin-bottom:4px;}
+.result-sub-val{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:18px;font-weight:800;color:var(--pink);
+}
+
+.loss-card{
+  background:var(--pink-dim);
+  border:1px solid rgba(232,108,158,0.25);
+  border-radius:16px;
+  padding:18px 20px;
+  margin-bottom:16px;
+  display:flex;align-items:center;gap:14px;
+}
+.loss-icon{font-size:32px;flex-shrink:0;}
+.loss-title{font-size:13px;font-weight:700;color:var(--gray-200);margin-bottom:4px;}
+.loss-amt{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:26px;font-weight:800;color:var(--pink);
+}
+.loss-desc{font-size:11px;color:var(--gray-400);margin-top:2px;}
+
+.breakdown-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;margin-bottom:16px;
+}
+.breakdown-title{
+  font-size:14px;font-weight:700;
+  color:var(--gray-200);margin-bottom:14px;
+}
+.bd-row{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  padding:12px 0;border-bottom:1px solid var(--border);
+}
+.bd-row:last-child{border-bottom:none;}
+.bd-name{
+  font-size:15px;font-weight:700;color:var(--white);
+  display:flex;align-items:center;gap:8px;margin-bottom:4px;
+}
+.bd-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--pink);display:inline-block;flex-shrink:0;
+}
+.bd-refund{font-size:12px;color:var(--pink);font-weight:600;}
+.bd-amt{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:17px;font-weight:800;color:var(--white);
+  text-align:right;
+}
+
+.footer{
+  font-size:12px;color:var(--gray-500);
+  line-height:1.8;padding:20px 0 48px;
+  border-top:1px solid var(--border);margin-top:16px;
+}
+.footer strong{color:var(--gray-400);}
+.footer-date{margin-top:8px;font-size:11px;color:var(--gray-500);}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.fu{animation:fadeUp 0.35s ease both;}
+.fu2{animation-delay:0.08s;}
+.fu3{animation-delay:0.16s;}
+.fu4{animation-delay:0.24s;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="heart.png" alt="donbokee">
+      donbokee
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-character"><img src="channel.png" alt="donbokee"></div>
+    <div class="hero-eyebrow">월300 직장인 필수 재테크</div>
+    <h1>반드시 가입해야 할<br><span class="hero-hl">절세계좌 3가지</span></h1>
+    <p class="hero-sub">같은 월급이어도 세금을 얼마나 아끼냐에 따라<br>돈 모이는 속도가 완전히 달라져</p>
+    <div class="cta-banner">
+      <p class="cta-text">앞으로 유용한 재테크 정보 받고 싶다면</p>
+      <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+        <img src="hi.png" alt=""> @donbokee 팔로우
+      </a>
+    </div>
+    <div class="main-tabs">
+      <button class="main-tab active" onclick="switchTab('compare', this)">계좌 비교</button>
+      <button class="main-tab" onclick="switchTab('calc', this)">계산기</button>
+    </div>
+  </div>
+
+  <!-- COMPARE TAB -->
+  <div id="tab-compare" class="tab-content active">
+    <div class="section">
+      <div class="section-title">절세계좌 3개</div>
+      <div class="section-sub">이 순서대로 채우면 세금이 확 줄어</div>
+
+      <div class="account-list">
+
+        <!-- ISA -->
+        <div class="account-card fu">
+          <div class="account-card-header">
+            <div class="account-card-left">
+              <div class="account-rank">① 1순위</div>
+              <div class="account-name">ISA</div>
+              <div class="account-badge">만능계좌</div>
+            </div>
+          </div>
+          <div class="account-desc">
+            투자·저축 다 되는 계좌야. 배당이나 이자 수익에 원래 15.4% 세금 붙는데, ISA 안에서 하면 서민형 기준 400만 원까지 세금 0원이야. ETF 투자하는 사람이라면 무조건 여기서 해야 해.
+          </div>
+          <div class="account-grid">
+            <div class="account-stat"><div class="account-stat-label">절세 방식</div><div class="account-stat-value pink">이자·배당 비과세<br>서민형 400만원↑</div></div>
+            <div class="account-stat"><div class="account-stat-label">연 납입 한도</div><div class="account-stat-value">2,000만원<br>(5년 최대 1억)</div></div>
+            <div class="account-stat"><div class="account-stat-label">언제 찾아</div><div class="account-stat-value">3년 유지 후<br>자유롭게</div></div>
+            <div class="account-stat"><div class="account-stat-label">투자 가능</div><div class="account-stat-value">ETF·펀드·예금·RP</div></div>
+            <div class="account-stat"><div class="account-stat-label">누가 가입해</div><div class="account-stat-value">19세 이상<br>소득자 누구나</div></div>
+            <div class="account-stat"><div class="account-stat-label">어디서 만들어</div><div class="account-stat-value">증권사·은행 앱</div></div>
+          </div>
+          <div class="account-warn">⚠️ 3년 안에 해지하면 면제받은 세금 다 내야 해. 3년 이상 묻어둘 여유자금으로만 넣어.</div>
+        </div>
+
+        <!-- 연금저축 -->
+        <div class="account-card fu fu2">
+          <div class="account-card-header">
+            <div class="account-card-left">
+              <div class="account-rank">② 2순위</div>
+              <div class="account-name">연금저축</div>
+              <div class="account-badge">세액공제 1순위</div>
+            </div>
+          </div>
+          <div class="account-desc">
+            넣은 돈의 13.2~16.5%를 연말정산에서 현금으로 돌려줘. 월 25만 원 넣으면 연말에 최대 49만 원이 돌아와. 직장인이라면 무조건 채워야 하는 계좌야.
+          </div>
+          <div class="account-grid">
+            <div class="account-stat"><div class="account-stat-label">세액공제율</div><div class="account-stat-value pink">13.2~16.5%<br>(소득에 따라)</div></div>
+            <div class="account-stat"><div class="account-stat-label">공제 한도</div><div class="account-stat-value">연 600만원<br>최대 99만원 환급</div></div>
+            <div class="account-stat"><div class="account-stat-label">언제 찾아</div><div class="account-stat-value">만 55세 이후<br>연금으로</div></div>
+            <div class="account-stat"><div class="account-stat-label">투자 가능</div><div class="account-stat-value">ETF·펀드·리츠</div></div>
+            <div class="account-stat"><div class="account-stat-label">누가 가입해</div><div class="account-stat-value">소득 없어도<br>누구나 가능</div></div>
+            <div class="account-stat"><div class="account-stat-label">어디서 만들어</div><div class="account-stat-value">증권사·은행 앱</div></div>
+          </div>
+          <div class="account-warn">⚠️ 중도해지하면 공제받은 세금 16.5%로 토해내. 55세 이후 받을 노후자금이라 생각하고 넣어.</div>
+        </div>
+
+        <!-- IRP -->
+        <div class="account-card fu fu3">
+          <div class="account-card-header">
+            <div class="account-card-left">
+              <div class="account-rank">③ 3순위</div>
+              <div class="account-name">IRP</div>
+              <div class="account-badge">세액공제 추가</div>
+            </div>
+          </div>
+          <div class="account-desc">
+            연금저축 채우고 여기 50만 원 더 넣으면 추가로 최대 99만 원 더 돌려받아. 연금저축+IRP 합쳐서 세액공제 한도 총 900만 원. 연금저축 먼저 채우고 그다음에 넣어.
+          </div>
+          <div class="account-grid">
+            <div class="account-stat"><div class="account-stat-label">추가 공제 한도</div><div class="account-stat-value pink">연금저축 합산<br>900만원까지</div></div>
+            <div class="account-stat"><div class="account-stat-label">추가 환급액</div><div class="account-stat-value green">최대 +99만원<br>더 받아</div></div>
+            <div class="account-stat"><div class="account-stat-label">언제 찾아</div><div class="account-stat-value">만 55세 이후<br>연금으로</div></div>
+            <div class="account-stat"><div class="account-stat-label">투자 가능</div><div class="account-stat-value">ETF·펀드·예금<br>(주식 직접 불가)</div></div>
+            <div class="account-stat"><div class="account-stat-label">누가 가입해</div><div class="account-stat-value">소득 있는<br>직장인·자영업자</div></div>
+            <div class="account-stat"><div class="account-stat-label">어디서 만들어</div><div class="account-stat-value">증권사·은행 앱<br>퇴직금과 별개</div></div>
+          </div>
+          <div class="account-warn">⚠️ 중도해지 시 세금 토해내는 것 + 기타소득세 16.5% 패널티까지. 연금저축보다 더 장기 자금으로 봐.</div>
+        </div>
+
+      </div>
+
+      <!-- SUMMARY -->
+      <div class="summary-box fu fu4">
+        <div class="summary-title">월300 직장인 1순위 입금 루틴</div>
+        <div class="summary-rows">
+          <div class="summary-row">
+            <div class="summary-row-label">① ISA</div>
+            <div class="summary-row-val">50만 × 12 = 600만</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-row-label">② 연금저축</div>
+            <div class="summary-row-val">25만 × 12 = 300만</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-row-label">③ IRP</div>
+            <div class="summary-row-val">50만 × 12 = 600만</div>
+          </div>
+        </div>
+        <div class="summary-total">
+          <div class="summary-total-label">세액공제 혜택 합계</div>
+          <div class="summary-total-val">총 900만원</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cta-banner" style="padding-bottom:8px;">
+      <p class="cta-text">앞으로 유용한 재테크 정보 받고 싶다면</p>
+      <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+        <img src="hi.png" alt=""> @donbokee 팔로우
+      </a>
+    </div>
+
+    <div class="footer">
+      <strong>⚠️ 유의사항</strong><br><br>
+      본 자료는 참고용이며 투자를 권유하는 것이 아닙니다. 세액공제율은 총급여·공제 항목에 따라 달라질 수 있습니다. 실제 환급액은 세무사 또는 국세청 홈택스에서 확인하세요.
+      <div class="footer-date">※ 2025년 세법 기준</div>
+    </div>
+  </div>
+
+  <!-- CALC TAB -->
+  <div id="tab-calc" class="tab-content">
+    <div class="section">
+      <div class="section-title">내 절세 계산하기</div>
+      <div class="section-sub">매달 얼마 넣으면 얼마나 모일지 계산해봐</div>
+
+      <div class="calc-card fu">
+        <div class="calc-eyebrow">STEP 1</div>
+        <div class="calc-title">매달 얼마 넣을 수 있어?</div>
+        <div class="calc-sub">계좌별 납입금액 입력해봐 (단위: 만원)</div>
+        <div class="acc-rows">
+          <div class="acc-row">
+            <div class="acc-tag">ISA</div>
+            <input class="acc-input" type="number" id="isa" value="50" min="0" max="200" inputmode="numeric" oninput="calc()">
+            <div class="acc-unit">만원</div>
+          </div>
+          <div class="acc-row">
+            <div class="acc-tag">연금저축</div>
+            <input class="acc-input" type="number" id="pension" value="25" min="0" max="150" inputmode="numeric" oninput="calc()">
+            <div class="acc-unit">만원</div>
+          </div>
+          <div class="acc-row">
+            <div class="acc-tag">IRP</div>
+            <input class="acc-input" type="number" id="irp" value="50" min="0" max="150" inputmode="numeric" oninput="calc()">
+            <div class="acc-unit">만원</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-card fu fu2">
+        <div class="calc-eyebrow">STEP 2</div>
+        <div class="calc-title">수익률은 몇 %로 볼래?</div>
+        <div class="calc-sub">ETF 장기투자 기준으로 잡아봐</div>
+        <div class="rate-row">
+          <div class="rate-label">예상 연 수익률</div>
+          <div class="rate-val" id="rateDisplay">7%</div>
+        </div>
+        <input type="range" id="rate" min="3" max="10" value="7" step="0.5" oninput="updateRate()">
+        <div class="slider-ends"><span>3% 보수적</span><span>10% 공격적</span></div>
+      </div>
+
+      <div class="result-hero fu fu3">
+        <div class="result-eyebrow">6년 후 예상 적립액</div>
+        <div class="result-big" id="totalAmt">0 <span>만원</span></div>
+        <div class="result-note" id="rateNote">연 7% 수익률 가정 · 참고용이야</div>
+        <div class="result-subrow">
+          <div>
+            <div class="result-sub-label">총 납입액</div>
+            <div class="result-sub-val" id="depAmt">0만</div>
+          </div>
+          <div>
+            <div class="result-sub-label">수익 + 절세 혜택</div>
+            <div class="result-sub-val" id="gainAmt">0만</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="loss-card fu fu3">
+        <div class="loss-icon">💸</div>
+        <div>
+          <div class="loss-title">지금 안 하면 매년 손해보는 금액</div>
+          <div class="loss-amt" id="lossAmt">0만원</div>
+          <div class="loss-desc">연금저축 + IRP 세액공제 혜택 기준</div>
+        </div>
+      </div>
+
+      <div class="breakdown-card fu fu4">
+        <div class="breakdown-title">계좌별 6년 적립 내역</div>
+        <div class="bd-row">
+          <div>
+            <div class="bd-name"><span class="bd-dot"></span>ISA</div>
+            <div class="bd-refund">비과세 혜택</div>
+          </div>
+          <div class="bd-amt" id="isaAmt">0만원</div>
+        </div>
+        <div class="bd-row">
+          <div>
+            <div class="bd-name"><span class="bd-dot"></span>연금저축</div>
+            <div class="bd-refund" id="pensionRefund">환급 약 0만원/년</div>
+          </div>
+          <div class="bd-amt" id="pensionAmt">0만원</div>
+        </div>
+        <div class="bd-row">
+          <div>
+            <div class="bd-name"><span class="bd-dot"></span>IRP</div>
+            <div class="bd-refund" id="irpRefund">환급 약 0만원/년</div>
+          </div>
+          <div class="bd-amt" id="irpAmt">0만원</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cta-banner" style="padding-bottom:8px;">
+      <p class="cta-text">앞으로 유용한 재테크 정보 받고 싶다면</p>
+      <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+        <img src="hi.png" alt=""> @donbokee 팔로우
+      </a>
+    </div>
+
+    <div class="footer">
+      <strong>⚠️ 유의사항</strong><br><br>
+      이 계산기는 참고용이야. 실제 환급액은 소득·공제 항목에 따라 달라져. 투자 수익은 원금 손실 가능성이 있어.
+      <div class="footer-date">※ 2025년 세법 기준 · 연 수익률은 과거 ETF 기준 예시</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function updateRate() {
+  document.getElementById('rateDisplay').textContent = document.getElementById('rate').value + '%';
+  calc();
+}
+
+function fv(monthly, annualRate, years) {
+  const r = annualRate / 12, n = years * 12;
+  if (r === 0) return monthly * n;
+  return monthly * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+}
+
+function fmt(n) { return Math.round(n).toLocaleString(); }
+
+function calc() {
+  const isa     = parseFloat(document.getElementById('isa').value)     || 0;
+  const pension = parseFloat(document.getElementById('pension').value) || 0;
+  const irp     = parseFloat(document.getElementById('irp').value)     || 0;
+  const rate    = parseFloat(document.getElementById('rate').value) / 100;
+  const years   = 6;
+
+  const isaFV     = fv(isa, rate, years);
+  const pensionFV = fv(pension, rate, years);
+  const irpFV     = fv(irp, rate, years);
+  const total     = isaFV + pensionFV + irpFV;
+  const deposit   = (isa + pension + irp) * 12 * years;
+  const gain      = total - deposit;
+
+  const pensionRefundY = Math.min(pension * 12, 600) * 0.132;
+  const irpRefundY     = Math.min(irp * 12, 300)     * 0.132;
+  const annualLoss     = pensionRefundY + irpRefundY;
+
+  document.getElementById('totalAmt').innerHTML     = fmt(total) + ' <span>만원</span>';
+  document.getElementById('depAmt').textContent     = fmt(deposit) + '만';
+  document.getElementById('gainAmt').textContent    = '+' + fmt(gain) + '만';
+  document.getElementById('lossAmt').textContent    = fmt(annualLoss) + '만원';
+  document.getElementById('isaAmt').textContent     = fmt(isaFV) + '만원';
+  document.getElementById('pensionAmt').textContent = fmt(pensionFV) + '만원';
+  document.getElementById('irpAmt').textContent     = fmt(irpFV) + '만원';
+  document.getElementById('pensionRefund').textContent = '환급 약 ' + fmt(pensionRefundY) + '만원/년';
+  document.getElementById('irpRefund').textContent     = '환급 약 ' + fmt(irpRefundY) + '만원/년';
+  document.getElementById('rateNote').textContent   = '연 ' + parseFloat(document.getElementById('rate').value).toFixed(1) + '% 수익률 가정 · 참고용이야';
+}
+
+calc();
+</script>
+</body>
+</html>
