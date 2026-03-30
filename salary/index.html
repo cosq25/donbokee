@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>월급 300만원 관리법 | @donbokee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2') format('woff2');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg-deep:#111118;
+  --bg-card:#1e1e2c;
+  --bg-card-hover:#282838;
+  --bg-elevated:#2c2c3e;
+  --pink:#e86c9e;
+  --pink-dark:#d4507f;
+  --pink-dim:rgba(232,108,158,0.15);
+  --pink-glow:rgba(232,108,158,0.25);
+  --white:#ffffff;
+  --gray-100:#f2f2f8;
+  --gray-200:#d4d4e0;
+  --gray-300:#aaaabc;
+  --gray-400:#9a9ab0;
+  --gray-500:#7e7e96;
+  --green:#34d399;
+  --green-dim:rgba(52,211,153,0.15);
+  --yellow:#f1c135;
+  --yellow-dim:rgba(241,193,53,0.15);
+  --border:#333345;
+  --border-light:#3d3d50;
+  --shadow:0 4px 20px rgba(0,0,0,0.3);
+  --shadow-pink:0 4px 16px rgba(232,108,158,0.25);
+  --radius:20px;
+  --radius-sm:14px;
+}
+
+body{
+  font-family:'Paperlogy','Noto Sans KR',-apple-system,sans-serif;
+  background:var(--bg-deep);
+  color:var(--gray-100);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.container{max-width:480px;margin:0 auto;padding:0 20px;}
+
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(17,17,24,0.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:12px 20px;
+}
+.nav-inner{max-width:480px;margin:0 auto;display:flex;align-items:center;gap:10px;}
+.nav-logo{font-size:15px;font-weight:800;color:var(--pink);display:flex;align-items:center;gap:8px;}
+.nav-logo img{width:36px;height:36px;border-radius:50%;object-fit:contain;}
+
+/* HERO */
+.hero{text-align:center;padding:40px 0 28px;}
+.hero-character{width:110px;height:110px;margin:0 auto 20px;}
+.hero-character img{width:100%;height:100%;object-fit:contain;}
+.hero-eyebrow{
+  font-size:13px;font-weight:700;
+  color:var(--pink);letter-spacing:0.06em;
+  margin-bottom:12px;
+}
+.hero h1{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:32px;font-weight:800;
+  color:var(--white);
+  letter-spacing:-0.5px;line-height:1.35;
+}
+.hero-hl{color:var(--pink);}
+.hero-sub{font-size:15px;color:var(--gray-300);margin-top:12px;font-weight:500;line-height:1.6;}
+
+/* CTA */
+.cta-banner{text-align:center;padding:20px 0 4px;}
+.cta-text{font-size:13px;color:var(--gray-400);font-weight:500;margin-bottom:10px;}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:transparent;color:var(--pink);
+  padding:11px 22px;border-radius:12px;
+  font-size:14px;font-weight:700;
+  text-decoration:none;border:1.5px solid var(--pink);
+  cursor:pointer;font-family:inherit;transition:all 0.2s;
+}
+.cta-btn:hover{background:var(--pink);color:var(--white);box-shadow:var(--shadow-pink);}
+.cta-btn img{width:24px;height:24px;border-radius:50%;object-fit:contain;}
+
+.section{padding:24px 0 12px;}
+.section-title{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:24px;font-weight:800;
+  color:var(--white);letter-spacing:-0.5px;margin-bottom:6px;
+}
+.section-sub{font-size:14px;color:var(--gray-400);margin-bottom:24px;font-weight:500;}
+
+/* INPUT SECTION */
+.input-card{
+  background:var(--bg-card);
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  padding:22px;
+  margin-bottom:16px;
+}
+.input-label{
+  font-size:12px;font-weight:700;
+  color:var(--pink);letter-spacing:0.06em;
+  margin-bottom:12px;
+}
+.input-row{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg-elevated);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:16px 18px;
+  transition:border-color 0.2s;
+}
+.input-row:focus-within{border-color:var(--pink);}
+.input-row input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--white);font-size:24px;font-weight:800;
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+}
+.input-row input::placeholder{color:var(--gray-500);}
+.input-unit{color:var(--gray-400);font-size:15px;font-weight:600;white-space:nowrap;}
+
+.quick-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+.quick-btn{
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  color:var(--gray-300);
+  font-size:13px;font-weight:600;
+  padding:8px 14px;
+  border-radius:20px;
+  cursor:pointer;
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  transition:all 0.2s;
+}
+.quick-btn:hover{
+  border-color:var(--pink);
+  color:var(--pink);
+  background:var(--pink-dim);
+}
+
+/* 자취 선택 버튼 */
+.living-btns{display:flex;gap:8px;margin-top:16px;}
+.living-btn{
+  flex:1;
+  background:var(--bg-elevated);
+  border:1.5px solid var(--border);
+  color:var(--gray-300);
+  font-size:14px;font-weight:700;
+  padding:14px;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  transition:all 0.2s;
+  text-align:center;
+}
+.living-btn:hover{
+  border-color:var(--pink);
+  background:var(--pink-dim);
+}
+.living-btn.active{
+  background:var(--pink);
+  color:var(--white);
+  border-color:var(--pink);
+}
+
+.calc-btn{
+  width:100%;
+  background:var(--pink);
+  color:var(--white);
+  border:none;
+  border-radius:var(--radius-sm);
+  padding:17px;
+  font-size:16px;font-weight:700;
+  cursor:pointer;
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  transition:all 0.2s;
+  margin-bottom:16px;
+  box-shadow:var(--shadow-pink);
+}
+.calc-btn:hover{
+  background:var(--pink-dark);
+  transform:translateY(-1px);
+}
+
+/* RESULTS */
+.results{display:none;}
+.results.visible{display:block;animation:fadeUp 0.4s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+/* SUMMARY BOX */
+.summary-box{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px 22px;
+  margin-bottom:16px;
+}
+.summary-title{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:16px;font-weight:700;
+  color:var(--gray-300);margin-bottom:16px;
+}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.summary-item{
+  background:var(--bg-elevated);
+  border-radius:12px;padding:14px;
+}
+.summary-item-label{font-size:11px;color:var(--gray-500);font-weight:600;margin-bottom:5px;}
+.summary-item-value{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:18px;font-weight:800;
+  color:var(--gray-100);line-height:1.3;
+}
+.summary-item-value.pink{color:var(--pink);}
+.summary-item-value.green{color:var(--green);}
+.summary-item-value.yellow{color:var(--yellow);}
+
+/* CHART */
+.chart-wrap{
+  display:flex;align-items:center;justify-content:center;
+  gap:24px;margin:20px 0;flex-wrap:wrap;
+}
+.donut-container{position:relative;width:130px;height:130px;}
+canvas{width:130px!important;height:130px!important;}
+.donut-center{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+}
+.donut-center-pct{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:22px;font-weight:800;color:var(--pink);
+}
+.donut-center-label{font-size:10px;color:var(--gray-500);font-weight:600;margin-top:2px;}
+.legend{display:flex;flex-direction:column;gap:8px;}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--gray-200);}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+
+/* SECTION LABEL */
+.section-label{
+  font-size:12px;font-weight:700;
+  color:var(--gray-400);
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  margin:20px 0 12px 2px;
+}
+
+/* SLIDER */
+.slider-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:16px;
+}
+.slider-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;
+}
+.slider-title{
+  font-size:15px;font-weight:700;
+  color:var(--pink);
+}
+.slider-amount{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:20px;font-weight:800;
+  color:var(--white);
+}
+.slider-wrap{position:relative;padding:0 4px;}
+.slider{
+  -webkit-appearance:none;
+  width:100%;
+  height:8px;
+  border-radius:8px;
+  background:var(--bg-elevated);
+  outline:none;
+  cursor:pointer;
+}
+.slider::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:24px;height:24px;
+  border-radius:50%;
+  background:var(--pink);
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(232,108,158,0.4);
+}
+.slider::-moz-range-thumb{
+  width:24px;height:24px;
+  border-radius:50%;
+  background:var(--pink);
+  cursor:pointer;
+  border:none;
+  box-shadow:0 2px 8px rgba(232,108,158,0.4);
+}
+.slider-labels{
+  display:flex;justify-content:space-between;
+  margin-top:8px;
+  font-size:11px;color:var(--gray-500);font-weight:600;
+}
+
+/* ITEM CARD */
+.item-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;
+  transition:all 0.2s;
+}
+.item-card:hover{
+  background:var(--bg-card-hover);
+  border-color:var(--border-light);
+}
+.item-left{display:flex;align-items:center;gap:14px;}
+.item-icon{
+  font-size:28px;
+  width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg-elevated);
+  border-radius:12px;
+  flex-shrink:0;
+}
+.item-name{
+  font-size:15px;font-weight:700;
+  color:var(--white);margin-bottom:3px;
+}
+.item-tip{
+  font-size:12px;color:var(--gray-500);
+  font-weight:500;
+}
+.item-right{
+  display:flex;align-items:center;gap:12px;
+}
+.item-input{
+  width:90px;
+  background:var(--bg-elevated);
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  padding:8px 10px;
+  color:var(--white);
+  font-size:15px;font-weight:700;
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  text-align:right;
+  outline:none;
+  transition:border-color 0.2s;
+}
+.item-input:focus{border-color:var(--pink);}
+.item-pct{
+  font-size:13px;font-weight:700;
+  color:var(--gray-400);
+  width:38px;text-align:right;
+}
+
+/* REMAINING CARD */
+.remaining-card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px 22px;
+  margin:20px 0;
+  text-align:center;
+}
+.remaining-card.surplus{
+  background:var(--green-dim);
+  border-color:var(--green);
+}
+.remaining-card.deficit{
+  background:rgba(239,68,68,0.1);
+  border-color:#ef4444;
+}
+.remaining-label{
+  font-size:13px;font-weight:700;
+  color:var(--gray-400);
+  margin-bottom:8px;
+}
+.remaining-amount{
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  font-size:28px;font-weight:800;
+  line-height:1.2;
+}
+.remaining-amount.surplus{color:var(--green);}
+.remaining-amount.deficit{color:#ef4444;}
+
+/* RESET BTN */
+.reset-btn{
+  width:100%;
+  background:var(--bg-elevated);
+  color:var(--gray-200);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:14px;
+  font-size:15px;font-weight:600;
+  cursor:pointer;
+  font-family:'Paperlogy','Noto Sans KR',sans-serif;
+  transition:all 0.2s;
+  margin-top:12px;
+}
+.reset-btn:hover{
+  background:var(--bg-card);
+  border-color:var(--border-light);
+}
+
+.fu{opacity:0;animation:fadeUp 0.4s ease forwards;}
+.fu2{animation-delay:0.1s;}
+.fu3{animation-delay:0.2s;}
+.fu4{animation-delay:0.3s;}
+
+/* 저축 브레이크다운 */
+.saving-breakdown{
+  background:var(--bg-elevated);
+  border-radius:12px;
+  padding:16px;
+  margin-top:14px;
+}
+.breakdown-title{
+  font-size:12px;font-weight:700;
+  color:var(--gray-400);
+  margin-bottom:12px;
+}
+.breakdown-item{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+.breakdown-item:last-child{margin-bottom:0;}
+.breakdown-name{
+  font-size:13px;font-weight:600;
+  color:var(--gray-200);
+}
+.breakdown-value{
+  font-size:13px;font-weight:700;
+  color:var(--pink);
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="heart.png" alt="donbokee">
+      donbokee
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="section">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-character">
+        <img src="channel.png" alt="캐릭터">
+      </div>
+      <div class="hero-eyebrow">SALARY CALCULATOR</div>
+      <h1>월급 <span class="hero-hl">300만원</span><br>어떻게 쓸까?</h1>
+      <p class="hero-sub">자동이체 빠지기 전에 미리 계획하자!</p>
+      <div class="cta-banner">
+        <p class="cta-text">더 많은 재테크 정보 받고 싶다면</p>
+        <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+          <img src="hi.png" alt=""> @donbokee 팔로우
+        </a>
+      </div>
+    </div>
+
+    <!-- INPUT -->
+    <div class="input-card">
+      <div class="input-label">💰 월급 입력</div>
+      <div class="input-row">
+        <input type="number" id="salary" placeholder="300" inputmode="numeric" />
+        <div class="input-unit">만원</div>
+      </div>
+      <div class="quick-btns">
+        <button class="quick-btn" onclick="setSalary(250)">250만원</button>
+        <button class="quick-btn" onclick="setSalary(300)">300만원</button>
+        <button class="quick-btn" onclick="setSalary(350)">350만원</button>
+        <button class="quick-btn" onclick="setSalary(400)">400만원</button>
+      </div>
+    </div>
+
+    <!-- 자취 여부 -->
+    <div class="input-card">
+      <div class="input-label">🏠 자취하시나요?</div>
+      <div class="living-btns">
+        <button class="living-btn active" id="btn-living" onclick="setLiving(true)">🏠 자취함</button>
+        <button class="living-btn" id="btn-home" onclick="setLiving(false)">🏡 부모님 집</button>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calculate()">📊 내 월급 관리법 보기</button>
+
+    <div class="results" id="results">
+
+      <!-- 요약 -->
+      <div class="summary-box fu">
+        <div class="summary-title">📊 내 월급 구성</div>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <div class="summary-item-label">저축·투자</div>
+            <div class="summary-item-value pink" id="sum-saving">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-item-label">저축 비율</div>
+            <div class="summary-item-value green" id="sum-saving-pct">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-item-label">고정비</div>
+            <div class="summary-item-value yellow" id="sum-fixed">-</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-item-label">생활비</div>
+            <div class="summary-item-value yellow" id="sum-variable">-</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 차트 -->
+      <div class="chart-wrap fu fu2">
+        <div class="donut-container">
+          <canvas id="donut"></canvas>
+          <div class="donut-center">
+            <div class="donut-center-pct" id="saving-pct-center">-</div>
+            <div class="donut-center-label">저축</div>
+          </div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#e86c9e"></div>저축·투자</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#f1c135"></div>고정비</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#7ec8c8"></div>생활비</div>
+        </div>
+      </div>
+
+      <!-- 저축 슬라이더 -->
+      <div class="section-label fu fu3">💰 저축·투자</div>
+      <div class="slider-card fu fu3">
+        <div class="slider-header">
+          <div class="slider-title">총 저축액 조절</div>
+          <div class="slider-amount" id="slider-total">140만원</div>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" class="slider" id="saving-slider" 
+                 min="0" max="300" value="140" step="10" oninput="updateSavingSlider()" />
+          <div class="slider-labels">
+            <span>0만원</span>
+            <span id="slider-max">300만원</span>
+          </div>
+        </div>
+        <div class="saving-breakdown">
+          <div class="breakdown-title">저축 구성</div>
+          <div class="breakdown-item">
+            <div class="breakdown-name">청년도약계좌</div>
+            <div class="breakdown-value" id="breakdown-1">70만원</div>
+          </div>
+          <div class="breakdown-item">
+            <div class="breakdown-name">ISA</div>
+            <div class="breakdown-value" id="breakdown-2">50만원</div>
+          </div>
+          <div class="breakdown-item">
+            <div class="breakdown-name">주택청약</div>
+            <div class="breakdown-value" id="breakdown-3">10만원</div>
+          </div>
+          <div class="breakdown-item">
+            <div class="breakdown-name">연금저축</div>
+            <div class="breakdown-value" id="breakdown-4">10만원</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 저축 4개 -->
+      <div id="saving-list" class="fu fu3"></div>
+
+      <!-- 고정비 -->
+      <div class="section-label fu fu3">✅ 고정비</div>
+      <div id="fixed-list" class="fu fu3"></div>
+
+      <!-- 생활비 -->
+      <div class="section-label fu fu3">✅ 생활비</div>
+      <div id="variable-list" class="fu fu3"></div>
+
+      <!-- 잔액 -->
+      <div id="remaining-card" class="fu fu4"></div>
+
+      <div class="cta-banner" style="padding-bottom:8px;">
+        <p class="cta-text">더 많은 재테크 정보 받고 싶다면</p>
+        <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+          <img src="hi.png" alt=""> @donbokee 팔로우
+        </a>
+      </div>
+
+      <button class="reset-btn" onclick="reset()">🔄 다시 계산하기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// 자취 여부
+let isLiving = true;
+
+// 저축 항목 (4개 분리)
+const savingItems = [
+  { icon: '🏦', name: '청년도약계좌', defaultPct: 0.233, tip: '정부지원금 최대 연 6%' },
+  { icon: '📊', name: 'ISA', defaultPct: 0.167, tip: '절세 혜택 + 투자 가능' },
+  { icon: '🏠', name: '주택청약', defaultPct: 0.033, tip: '내 집 마련 준비' },
+  { icon: '💼', name: '연금저축', defaultPct: 0.033, tip: '세액공제 16.5%' },
+];
+
+// 고정비 (자취/비자취 따라 변경)
+const fixedItems = [
+  { icon: '🏠', name: '주거비', defaultPct: 0.20, tip: '부모님과 거주 시 저축으로 전환', livingOnly: true },
+  { icon: '🔒', name: '보험료', defaultPct: 0.05, tip: '불필요한 보험 정리하면 절약 가능' },
+  { icon: '🚌', name: '교통비', defaultPct: 0.017, tip: 'K-Pass 이용 시 2~3만원 환급' },
+  { icon: '🎉', name: '경조사', defaultPct: 0.033, tip: '안 쓰면 비상금 계좌에 적립' },
+];
+
+// 생활비
+const variableItems = [
+  { icon: '🍽️', name: '식비', defaultPct: 0.167, tip: '점심 8천원×20일 기준' },
+  { icon: '🛍️', name: '쇼핑·여가', defaultPct: 0.05, tip: '체크카드로 한도 정해두기' },
+  { icon: '🚨', name: '비상금', defaultPct: 0.017, tip: '안 쓰면 비상금 계좌에 적립' },
+];
+
+let salary = 0;
+let userValues = {};
+
+function setSalary(v) { document.getElementById('salary').value = v; }
+
+function setLiving(living) {
+  isLiving = living;
+  document.getElementById('btn-living').classList.toggle('active', living);
+  document.getElementById('btn-home').classList.toggle('active', !living);
+}
+
+function fmt(만원) {
+  if (만원 >= 10000) return (만원 / 10000).toFixed(1) + '억';
+  return Math.round(만원).toLocaleString() + '만원';
+}
+
+function calculate() {
+  salary = parseFloat(document.getElementById('salary').value);
+  if (!salary || salary <= 0) { alert('월급을 입력해주세요!'); return; }
+  
+  // 슬라이더 최대값 설정
+  document.getElementById('saving-slider').max = salary;
+  document.getElementById('slider-max').textContent = salary + '만원';
+  
+  userValues = {};
+  render();
+}
+
+function updateSavingSlider() {
+  const totalSaving = parseFloat(document.getElementById('saving-slider').value);
+  document.getElementById('slider-total').textContent = fmt(totalSaving);
+  
+  // 저축 4개 비율 유지하면서 재분배
+  const ratio = totalSaving / 140; // 기본 140만원 대비 비율
+  userValues['청년도약계좌'] = Math.round(70 * ratio);
+  userValues['ISA'] = Math.round(50 * ratio);
+  userValues['주택청약'] = Math.round(10 * ratio);
+  userValues['연금저축'] = Math.round(10 * ratio);
+  
+  // 브레이크다운 업데이트
+  document.getElementById('breakdown-1').textContent = fmt(userValues['청년도약계좌']);
+  document.getElementById('breakdown-2').textContent = fmt(userValues['ISA']);
+  document.getElementById('breakdown-3').textContent = fmt(userValues['주택청약']);
+  document.getElementById('breakdown-4').textContent = fmt(userValues['연금저축']);
+  
+  render();
+}
+
+function render() {
+  // 저축 항목 계산
+  savingItems.forEach(item => {
+    if (userValues[item.name] === undefined) {
+      userValues[item.name] = Math.round(salary * item.defaultPct);
+    }
+  });
+  
+  // 고정비 계산 (자취 여부 반영)
+  fixedItems.forEach(item => {
+    if (item.livingOnly && !isLiving) {
+      userValues[item.name] = 0; // 비자취면 주거비 0
+    } else {
+      if (userValues[item.name] === undefined) {
+        userValues[item.name] = Math.round(salary * item.defaultPct);
+      }
+    }
+  });
+  
+  // 비자취면 주거비 → ISA로 전환
+  if (!isLiving) {
+    const 주거비절감 = Math.round(salary * 0.20);
+    userValues['ISA'] = Math.round(salary * 0.167) + 주거비절감;
+  }
+  
+  // 생활비 계산
+  variableItems.forEach(item => {
+    if (userValues[item.name] === undefined) {
+      userValues[item.name] = Math.round(salary * item.defaultPct);
+    }
+  });
+  
+  // 총합 계산
+  const savingTotal = savingItems.reduce((s, i) => s + (userValues[i.name] || 0), 0);
+  const fixedTotal = fixedItems.reduce((s, i) => s + (userValues[i.name] || 0), 0);
+  const variableTotal = variableItems.reduce((s, i) => s + (userValues[i.name] || 0), 0);
+  const totalSpend = savingTotal + fixedTotal + variableTotal;
+  const remaining = salary - totalSpend;
+  const savingPct = Math.round((savingTotal / salary) * 100);
+  
+  // 요약
+  document.getElementById('sum-saving').textContent = fmt(savingTotal);
+  document.getElementById('sum-saving-pct').textContent = savingPct + '%';
+  document.getElementById('sum-fixed').textContent = fmt(fixedTotal);
+  document.getElementById('sum-variable').textContent = fmt(variableTotal);
+  document.getElementById('saving-pct-center').textContent = savingPct + '%';
+  
+  // 슬라이더 동기화
+  document.getElementById('saving-slider').value = savingTotal;
+  document.getElementById('slider-total').textContent = fmt(savingTotal);
+  
+  // 브레이크다운 업데이트
+  document.getElementById('breakdown-1').textContent = fmt(userValues['청년도약계좌']);
+  document.getElementById('breakdown-2').textContent = fmt(userValues['ISA']);
+  document.getElementById('breakdown-3').textContent = fmt(userValues['주택청약']);
+  document.getElementById('breakdown-4').textContent = fmt(userValues['연금저축']);
+  
+  // 도넛 차트
+  drawDonut(savingTotal, fixedTotal, variableTotal);
+  
+  // 저축 4개 렌더
+  const savingList = document.getElementById('saving-list');
+  savingList.innerHTML = '';
+  savingItems.forEach(item => {
+    savingList.appendChild(makeItemCard(item));
+  });
+  
+  // 고정비 렌더
+  const fixedList = document.getElementById('fixed-list');
+  fixedList.innerHTML = '';
+  fixedItems.forEach(item => {
+    if (item.livingOnly && !isLiving) return; // 비자취면 주거비 표시 안함
+    fixedList.appendChild(makeItemCard(item));
+  });
+  
+  // 생활비 렌더
+  const varList = document.getElementById('variable-list');
+  varList.innerHTML = '';
+  variableItems.forEach(item => {
+    varList.appendChild(makeItemCard(item));
+  });
+  
+  // 잔액
+  const rc = document.getElementById('remaining-card');
+  if (remaining >= 0) {
+    rc.className = 'remaining-card surplus';
+    rc.innerHTML = `<div class="remaining-label">💚 남은 금액</div><div class="remaining-amount surplus">${fmt(remaining)}</div>`;
+  } else {
+    rc.className = 'remaining-card deficit';
+    rc.innerHTML = `<div class="remaining-label">⚠️ 초과 금액</div><div class="remaining-amount deficit">-${fmt(Math.abs(remaining))}</div>`;
+  }
+  
+  document.getElementById('results').classList.add('visible');
+  setTimeout(() => document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+function makeItemCard(item) {
+  const val = userValues[item.name] || 0;
+  const pct = Math.round((val / salary) * 100);
+  const div = document.createElement('div');
+  div.className = 'item-card';
+  div.innerHTML = `
+    <div class="item-left">
+      <div class="item-icon">${item.icon}</div>
+      <div>
+        <div class="item-name">${item.name}</div>
+        <div class="item-tip">${item.tip}</div>
+      </div>
+    </div>
+    <div class="item-right">
+      <input class="item-input" type="number" value="${val}" data-name="${item.name}" onchange="updateItem(this)" inputmode="numeric" />
+      <div class="item-pct">${pct}%</div>
+    </div>`;
+  return div;
+}
+
+function updateItem(input) {
+  const name = input.dataset.name;
+  const val = parseFloat(input.value) || 0;
+  userValues[name] = val;
+  render();
+}
+
+function drawDonut(saving, fixed, variable) {
+  const canvas = document.getElementById('donut');
+  const ctx = canvas.getContext('2d');
+  canvas.width = 260; canvas.height = 260;
+  
+  const total = saving + fixed + variable || 1;
+  const segments = [
+    { value: saving,   color: '#e86c9e' },
+    { value: fixed,    color: '#f1c135' },
+    { value: variable, color: '#7ec8c8' },
+  ];
+  
+  ctx.clearRect(0, 0, 260, 260);
+  let start = -Math.PI / 2;
+  const cx = 130, cy = 130, r = 110, inner = 70;
+  
+  segments.forEach(seg => {
+    const angle = (seg.value / total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, start + angle);
+    ctx.closePath();
+    ctx.fillStyle = seg.color;
+    ctx.fill();
+    start += angle;
+  });
+  
+  // 안쪽 원 (도넛 구멍)
+  ctx.beginPath();
+  ctx.arc(cx, cy, inner, 0, Math.PI * 2);
+  ctx.fillStyle = '#1e1e2c';
+  ctx.fill();
+}
+
+function reset() {
+  document.getElementById('salary').value = '';
+  document.getElementById('results').classList.remove('visible');
+  salary = 0;
+  userValues = {};
+  isLiving = true;
+  setLiving(true);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('salary').addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+</script>
+</body>
+</html>
