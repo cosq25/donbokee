@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>대출금리 비교 계산기 | @donbokee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg-deep:#111118;
+  --bg-card:#1e1e2c;
+  --bg-card-hover:#282838;
+  --bg-elevated:#2c2c3e;
+  --pink:#e86c9e;
+  --pink-dark:#d4507f;
+  --pink-dim:rgba(232,108,158,0.15);
+  --pink-glow:rgba(232,108,158,0.25);
+  --white:#ffffff;
+  --gray-100:#f2f2f8;
+  --gray-200:#d4d4e0;
+  --gray-300:#aaaabc;
+  --gray-400:#888898;
+  --gray-500:#6a6a7c;
+  --border:#333345;
+  --border-light:#3d3d50;
+  --shadow:0 4px 20px rgba(0,0,0,0.3);
+  --shadow-pink:0 4px 16px rgba(232,108,158,0.25);
+  --radius:20px;
+  --radius-sm:14px;
+}
+body{
+  font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:var(--bg-deep);color:var(--gray-100);
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.container{max-width:480px;margin:0 auto;padding:0 20px;}
+
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(17,17,24,0.9);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);padding:12px 20px;
+}
+.nav-inner{
+  max-width:480px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.nav-logo{font-size:15px;font-weight:800;color:var(--pink);display:flex;align-items:center;gap:8px;}
+.nav-btns{display:flex;gap:8px;}
+.nav-btn{
+  padding:10px 20px;border-radius:12px;font-size:15px;font-weight:700;
+  border:none;cursor:pointer;font-family:inherit;transition:all 0.2s;
+}
+.nav-btn.outline{background:var(--bg-elevated);color:var(--gray-100);border:1.5px solid var(--gray-500);}
+.nav-btn.outline:hover{border-color:var(--pink);color:var(--pink);}
+.nav-btn.fill{background:var(--pink);color:var(--white);box-shadow:0 2px 12px rgba(232,108,158,0.3);}
+.nav-btn.fill:hover{background:var(--pink-dark);}
+
+/* HERO */
+.hero{text-align:center;padding:44px 0 40px;}
+.hero-character{width:110px;height:110px;margin:0 auto 18px;}
+.hero-character img{width:100%;height:100%;object-fit:contain;}
+.hero h1{font-size:32px;font-weight:900;color:var(--white);letter-spacing:-1px;line-height:1.25;}
+.hero-hl{color:var(--pink);}
+.hero-sub{font-size:16px;color:var(--gray-300);margin-top:12px;font-weight:500;}
+.hero-badge{
+  display:inline-block;margin-top:16px;
+  background:var(--pink-dim);color:var(--pink);
+  padding:8px 18px;border-radius:50px;
+  font-size:13px;font-weight:700;
+  border:1px solid rgba(232,108,158,0.3);
+}
+
+/* CTA */
+.cta-banner{text-align:center;padding:20px 0;}
+.cta-text{font-size:14px;color:var(--gray-400);font-weight:500;margin-bottom:10px;}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:transparent;color:var(--pink);
+  padding:11px 22px;border-radius:12px;
+  font-size:14px;font-weight:700;text-decoration:none;
+  border:1.5px solid var(--pink);cursor:pointer;font-family:inherit;
+  transition:all 0.2s;
+}
+.cta-btn:hover{background:var(--pink);color:var(--white);box-shadow:var(--shadow-pink);}
+.cta-btn:active{transform:scale(0.97);}
+
+/* DIVIDER */
+.divider{height:8px;background:var(--bg-elevated);margin:12px -20px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+
+/* SECTION */
+.section{padding:40px 0 24px;}
+.section-title{font-size:26px;font-weight:900;color:var(--white);letter-spacing:-0.5px;margin-bottom:6px;}
+.section-sub{font-size:14px;color:var(--gray-400);margin-bottom:24px;font-weight:500;}
+
+/* TABLE */
+.table-wrap{
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  border-radius:var(--radius);border:1px solid var(--border);
+  background:var(--bg-card);
+  scrollbar-width:none;
+}
+.table-wrap::-webkit-scrollbar{display:none;}
+table{
+  width:100%;border-collapse:collapse;font-size:14px;
+  min-width:340px;
+}
+thead tr{background:var(--bg-elevated);}
+th{
+  padding:14px 12px;font-size:13px;font-weight:700;
+  color:var(--gray-300);text-align:center;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+th.col-label{
+  color:var(--pink);font-size:12px;text-align:left;
+  padding-left:16px;min-width:70px;
+}
+td{
+  padding:14px 12px;text-align:center;
+  border-bottom:1px solid var(--border);
+  font-size:15px;font-weight:700;color:var(--white);
+  transition:background 0.2s;
+}
+td.row-label{
+  text-align:left;padding-left:16px;
+  font-size:13px;font-weight:700;color:var(--gray-300);
+  background:var(--bg-elevated);
+  white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:rgba(232,108,158,0.06);}
+tbody tr:hover td.row-label{background:var(--bg-elevated);}
+
+/* 금리별 강조 색상 */
+.rate-low{color:#60a5fa !important;}
+.rate-mid{color:var(--gray-200) !important;}
+.rate-high{color:#f87171 !important;}
+.rate-highlight{color:var(--pink) !important;}
+
+/* 하이라이트 행 */
+tr.highlight-row td{background:rgba(232,108,158,0.05);}
+tr.highlight-row td.row-label{background:rgba(232,108,158,0.12);color:var(--pink);}
+
+/* 인포 박스 */
+.info-box{
+  margin-top:16px;
+  background:rgba(96,165,250,0.08);
+  border:1px solid rgba(96,165,250,0.2);
+  border-radius:var(--radius-sm);
+  padding:16px 18px;
+  font-size:13px;color:#93c5fd;line-height:1.75;font-weight:500;
+}
+.shock-box{
+  margin-top:12px;
+  background:rgba(232,108,158,0.1);
+  border:1px solid rgba(232,108,158,0.25);
+  border-radius:var(--radius-sm);
+  padding:16px 18px;
+  font-size:14px;color:var(--gray-200);line-height:1.75;font-weight:500;
+}
+.shock-box strong{color:var(--pink);font-size:16px;}
+
+/* CALCULATOR */
+.calc-section{padding:40px 0 24px;}
+.calc-form{
+  background:var(--bg-card);border-radius:var(--radius);
+  border:1px solid var(--border);padding:24px;
+}
+.calc-field{margin-bottom:24px;}
+.calc-label{font-size:16px;font-weight:700;color:var(--white);margin-bottom:12px;display:block;}
+
+.calc-input-wrap{
+  display:flex;align-items:center;
+  background:var(--bg-elevated);border:1px solid var(--border);
+  border-radius:var(--radius-sm);overflow:hidden;transition:all 0.2s;
+}
+.calc-input-wrap:focus-within{border-color:var(--pink);box-shadow:0 0 0 3px var(--pink-dim);}
+.calc-input{
+  flex:1;border:none;padding:16px 18px;font-size:24px;font-weight:800;
+  font-family:inherit;color:var(--white);outline:none;background:transparent;min-width:0;
+}
+.calc-input::placeholder{color:var(--gray-500);font-weight:500;}
+.calc-input-unit{padding:16px 18px 16px 0;font-size:16px;font-weight:600;color:var(--gray-400);}
+
+.calc-presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.calc-preset{
+  padding:9px 16px;border-radius:10px;font-size:14px;font-weight:600;
+  background:var(--bg-elevated);color:var(--gray-300);
+  border:1px solid var(--border);cursor:pointer;transition:all 0.2s;
+}
+.calc-preset:hover,.calc-preset.active{background:var(--pink);color:var(--white);border-color:var(--pink);}
+
+/* 금리 슬라이더 */
+.rate-display{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;
+}
+.rate-value{font-size:28px;font-weight:900;color:var(--pink);}
+.rate-value span{font-size:16px;font-weight:600;color:var(--gray-400);}
+input[type=range]{
+  width:100%;-webkit-appearance:none;
+  height:6px;border-radius:3px;
+  background:linear-gradient(to right, var(--pink) 0%, var(--pink) 50%, var(--bg-elevated) 50%);
+  outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:24px;height:24px;
+  border-radius:50%;background:var(--pink);
+  box-shadow:0 2px 8px rgba(232,108,158,0.4);
+  border:3px solid var(--white);
+}
+input[type=range]::-moz-range-thumb{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--pink);border:3px solid var(--white);
+  box-shadow:0 2px 8px rgba(232,108,158,0.4);
+}
+.rate-ticks{display:flex;justify-content:space-between;margin-top:6px;}
+.rate-tick{font-size:11px;color:var(--gray-500);font-weight:500;}
+
+.calc-btn{
+  width:100%;padding:18px;
+  background:var(--pink);color:var(--white);
+  border:none;border-radius:var(--radius-sm);
+  font-size:17px;font-weight:700;font-family:inherit;
+  cursor:pointer;transition:all 0.2s;margin-top:4px;
+  box-shadow:var(--shadow-pink);
+}
+.calc-btn:hover{background:var(--pink-dark);transform:translateY(-1px);}
+.calc-btn:active{transform:scale(0.97);}
+
+/* RESULT */
+.calc-result{
+  display:none;margin-top:24px;border-radius:var(--radius);
+  overflow:hidden;border:1px solid var(--pink);
+  box-shadow:0 0 0 1px var(--pink),0 8px 32px rgba(232,108,158,0.2);
+}
+.calc-result.show{display:block;animation:popUp 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes popUp{from{opacity:0;transform:translateY(12px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.calc-result-header{
+  background:linear-gradient(135deg,var(--pink),var(--pink-dark));
+  padding:32px 24px;text-align:center;color:var(--white);position:relative;overflow:hidden;
+}
+.calc-result-header::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:120px;height:120px;background:rgba(255,255,255,0.08);border-radius:50%;
+}
+.calc-result-header::after{
+  content:'';position:absolute;bottom:-20px;left:-20px;
+  width:80px;height:80px;background:rgba(255,255,255,0.05);border-radius:50%;
+}
+.calc-result-label{font-size:14px;opacity:0.85;margin-bottom:8px;font-weight:500;}
+.calc-result-amount{font-size:42px;font-weight:900;letter-spacing:-1.5px;position:relative;z-index:1;}
+.calc-result-sub{font-size:13px;opacity:0.7;margin-top:8px;}
+
+.calc-result-body{padding:20px 24px;background:var(--bg-card);}
+.calc-result-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 0;border-bottom:1px solid var(--border);
+}
+.calc-result-row:last-child{border-bottom:none;}
+.calc-result-row-label{font-size:15px;color:var(--gray-400);}
+.calc-result-row-value{font-size:17px;font-weight:700;color:var(--white);}
+.calc-result-row-value.danger{color:#f87171;}
+.calc-result-row-value.accent{color:var(--pink);}
+
+/* FOOTER */
+.footer{text-align:center;padding:28px 0 44px;}
+.footer-notice{
+  font-size:13px;color:var(--gray-400);line-height:1.75;
+  margin-bottom:20px;background:var(--bg-card);
+  border-radius:var(--radius-sm);padding:20px;
+  border:1px solid var(--border);text-align:left;
+}
+.footer-notice strong{color:var(--gray-200);font-weight:700;}
+.footer-date{font-size:12px;color:var(--gray-500);margin-top:12px;}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><img src="img/heart.png" alt="">donbokee</div>
+    <div class="nav-btns">
+      <button class="nav-btn outline" onclick="document.getElementById('table').scrollIntoView({behavior:'smooth'})">상환표</button>
+      <button class="nav-btn fill" onclick="document.getElementById('calc').scrollIntoView({behavior:'smooth'})">계산기</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="hero-character"><img src="img/channel.png" alt="donbokee"></div>
+    <h1><span class="hero-hl">대출금리</span> 비교<br>계산기</h1>
+    <p class="hero-sub">대출받기 전에 꼭 확인하세요</p>
+    <div class="hero-badge">📊 원리금균등 · 30년 만기 기준</div>
+  </div>
+
+  <div class="cta-banner">
+    <p class="cta-text">재테크 정보 매일 받고 싶다면</p>
+    <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+      <img src="img/hi.png" alt=""> @donbokee 팔로우
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 월 상환액 표 -->
+  <div class="section" id="table">
+    <h2 class="section-title">월 상환액 표</h2>
+    <p class="section-sub">내 대출금액 찾아서 확인해봐 👇</p>
+
+    <div class="table-wrap">
+      <table id="loanTable">
+        <thead>
+          <tr>
+            <th class="col-label">대출금액</th>
+            <th><span class="rate-low">3.0%</span></th>
+            <th><span class="rate-low">3.5%</span></th>
+            <th><span class="rate-highlight">4.0%</span></th>
+            <th><span class="rate-high">4.5%</span></th>
+            <th><span class="rate-high">5.0%</span></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="info-box">
+      💡 원리금균등 30년 만기 기준이에요. 매달 원금+이자를 동일하게 납부하는 방식이에요.
+    </div>
+
+    <div class="shock-box" id="shockBox">
+      😱 3억 대출 시 금리 1% 차이<br>→ 30년 총 이자 차이 <strong id="shockAmount">계산 중...</strong>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <p class="cta-text">더 많은 재테크 꿀팁이 궁금하다면</p>
+    <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+      <img src="img/hi.png" alt=""> @donbokee 팔로우
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 계산기 -->
+  <div class="calc-section" id="calc">
+    <h2 class="section-title">내 대출 계산기</h2>
+    <p class="section-sub">직접 넣어서 확인해봐 👇</p>
+
+    <div class="calc-form">
+      <div class="calc-field">
+        <label class="calc-label">대출금액이 얼마야?</label>
+        <div class="calc-input-wrap">
+          <input type="number" class="calc-input" id="loanAmount" placeholder="3" inputmode="numeric">
+          <span class="calc-input-unit">억원</span>
+        </div>
+        <div class="calc-presets" id="amountPresets">
+          <button class="calc-preset" data-val="1">1억</button>
+          <button class="calc-preset" data-val="2">2억</button>
+          <button class="calc-preset" data-val="3">3억</button>
+          <button class="calc-preset" data-val="4">4억</button>
+          <button class="calc-preset" data-val="5">5억</button>
+        </div>
+      </div>
+
+      <div class="calc-field">
+        <label class="calc-label">금리가 몇 %야?</label>
+        <div class="rate-display">
+          <div class="rate-value"><span id="rateDisplay">4.0</span><span>%</span></div>
+        </div>
+        <input type="range" id="rateSlider" min="2.0" max="7.0" step="0.1" value="4.0">
+        <div class="rate-ticks">
+          <span class="rate-tick">2%</span>
+          <span class="rate-tick">3%</span>
+          <span class="rate-tick">4%</span>
+          <span class="rate-tick">5%</span>
+          <span class="rate-tick">6%</span>
+          <span class="rate-tick">7%</span>
+        </div>
+      </div>
+
+      <div class="calc-field">
+        <label class="calc-label">상환기간이 몇 년이야?</label>
+        <div class="calc-input-wrap">
+          <input type="number" class="calc-input" id="periodYears" placeholder="30" inputmode="numeric">
+          <span class="calc-input-unit">년</span>
+        </div>
+        <div class="calc-presets" id="periodPresets">
+          <button class="calc-preset" data-val="10">10년</button>
+          <button class="calc-preset" data-val="20">20년</button>
+          <button class="calc-preset" data-val="30">30년</button>
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calculate()">월 상환액 계산하기 →</button>
+    </div>
+
+    <div class="calc-result" id="calcResult">
+      <div class="calc-result-header">
+        <div class="calc-result-label">매달 납부 금액</div>
+        <div class="calc-result-amount" id="resultMonthly"></div>
+        <div class="calc-result-sub" id="resultSub"></div>
+      </div>
+      <div class="calc-result-body" id="resultBody"></div>
+    </div>
+  </div>
+
+  <div class="cta-banner">
+    <p class="cta-text">앞으로 유용한 재테크 정보 받고 싶다면</p>
+    <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+      <img src="img/hi.png" alt=""> @donbokee 팔로우
+    </a>
+  </div>
+
+  <div class="footer">
+    <div class="footer-notice">
+      <strong>⚠️ 유의사항</strong><br><br>
+      본 계산기는 원리금균등 방식 기준 예상 금액이며, 실제 상환액은 대출 종류, 우대금리 적용 여부, 금리 변동 등에 따라 달라질 수 있습니다. 모든 금융 결정은 금융기관과 상담 후 진행하세요.
+      <div class="footer-date">기준: 원리금균등상환 방식</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// 월 상환액 계산 (원리금균등)
+function calcMonthly(principal, annualRate, years){
+  const r = annualRate / 100 / 12;
+  const n = years * 12;
+  if(r === 0) return principal / n;
+  return principal * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
+}
+
+function fmtWon(n){
+  const man = Math.round(n / 10000);
+  if(man >= 10000){
+    const uk = Math.floor(man / 10000);
+    const rem = man % 10000;
+    return rem > 0 ? `${uk}억 ${rem.toLocaleString()}만원` : `${uk}억원`;
+  }
+  return `${man.toLocaleString()}만원`;
+}
+
+function fmtMonthly(n){
+  const man = Math.round(n / 10000);
+  return `${man.toLocaleString()}만원`;
+}
+
+// 표 렌더링
+const amounts = [1,1.5,2,2.5,3,3.5,4,4.5,5];
+const rates = [3.0,3.5,4.0,4.5,5.0];
+const highlightRows = [2,4]; // 3억, 4억 (0-indexed)
+
+function renderTable(){
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = amounts.map((a, i) => {
+    const isHighlight = a === 3 || a === 4;
+    const cells = rates.map((r, ri) => {
+      const monthly = calcMonthly(a * 1e8, r, 30);
+      const man = Math.round(monthly / 10000);
+      let cls = '';
+      if(ri === 0 || ri === 1) cls = 'rate-low';
+      else if(ri === 2) cls = 'rate-highlight';
+      else cls = 'rate-high';
+      return `<td class="${cls}">${man}만원</td>`;
+    }).join('');
+    const labelUnit = a >= 1 && a % 1 === 0 ? `${a}억` : `${a}억`;
+    return `<tr${isHighlight?' class="highlight-row"':''}>
+      <td class="row-label">${labelUnit === '1.5억' ? '1.5억' : labelUnit === '2.5억' ? '2.5억' : labelUnit === '3.5억' ? '3.5억' : labelUnit === '4.5억' ? '4.5억' : labelUnit}</td>
+      ${cells}
+    </tr>`;
+  }).join('');
+
+  // 충격 박스: 3억, 3% vs 4% 30년 총이자 차이
+  const m30 = calcMonthly(3e8, 3.0, 30);
+  const m40 = calcMonthly(3e8, 4.0, 30);
+  const diff = (m40 - m30) * 30 * 12;
+  document.getElementById('shockAmount').textContent = fmtWon(diff) + ' 더 냄';
+}
+
+// 슬라이더
+const slider = document.getElementById('rateSlider');
+const rateDisplay = document.getElementById('rateDisplay');
+slider.addEventListener('input', function(){
+  rateDisplay.textContent = parseFloat(this.value).toFixed(1);
+  updateSliderBg(this);
+});
+function updateSliderBg(el){
+  const min = parseFloat(el.min), max = parseFloat(el.max), val = parseFloat(el.value);
+  const pct = ((val - min) / (max - min)) * 100;
+  el.style.background = `linear-gradient(to right, var(--pink) 0%, var(--pink) ${pct}%, var(--bg-elevated) ${pct}%)`;
+}
+updateSliderBg(slider);
+
+// 프리셋
+document.getElementById('amountPresets').addEventListener('click', e => {
+  const b = e.target.closest('.calc-preset'); if(!b) return;
+  document.getElementById('loanAmount').value = b.dataset.val;
+  document.querySelectorAll('#amountPresets .calc-preset').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+});
+document.getElementById('periodPresets').addEventListener('click', e => {
+  const b = e.target.closest('.calc-preset'); if(!b) return;
+  document.getElementById('periodYears').value = b.dataset.val;
+  document.querySelectorAll('#periodPresets .calc-preset').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+});
+
+// 계산
+function calculate(){
+  const amountUk = parseFloat(document.getElementById('loanAmount').value) || 3;
+  const rate = parseFloat(document.getElementById('rateSlider').value);
+  const years = parseInt(document.getElementById('periodYears').value) || 30;
+  const principal = amountUk * 1e8;
+  const monthly = calcMonthly(principal, rate, years);
+  const totalPay = monthly * years * 12;
+  const totalInterest = totalPay - principal;
+
+  // 0.5% 낮추면?
+  const lowerRate = Math.max(1.0, rate - 0.5);
+  const lowerMonthly = calcMonthly(principal, lowerRate, years);
+  const lowerTotalInterest = lowerMonthly * years * 12 - principal;
+  const interestDiff = totalInterest - lowerTotalInterest;
+
+  const res = document.getElementById('calcResult');
+  res.classList.add('show');
+  document.getElementById('resultMonthly').textContent = fmtMonthly(monthly);
+  document.getElementById('resultSub').textContent = `${amountUk}억 · 금리 ${rate.toFixed(1)}% · ${years}년 기준`;
+  document.getElementById('resultBody').innerHTML = `
+    <div class="calc-result-row">
+      <span class="calc-result-row-label">총 상환 원금</span>
+      <span class="calc-result-row-value">${fmtWon(principal)}</span>
+    </div>
+    <div class="calc-result-row">
+      <span class="calc-result-row-label">${years}년 총 이자</span>
+      <span class="calc-result-row-value danger">+${fmtWon(totalInterest)}</span>
+    </div>
+    <div class="calc-result-row">
+      <span class="calc-result-row-label">총 납부 금액</span>
+      <span class="calc-result-row-value">${fmtWon(totalPay)}</span>
+    </div>
+    <div class="calc-result-row">
+      <span class="calc-result-row-label">금리 0.5% 낮추면</span>
+      <span class="calc-result-row-value accent">이자 ${fmtWon(interestDiff)} 절약</span>
+    </div>`;
+  res.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+renderTable();
+</script>
+</body>
+</html>
