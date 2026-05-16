@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>월급으로 1억 만드는 ETF | @donbokee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg-deep:#111118;--bg-card:#1e1e2c;--bg-elevated:#2c2c3e;
+  --pink:#e86c9e;--pink-dark:#d4507f;--pink-dim:rgba(232,108,158,0.15);--pink-glow:rgba(232,108,158,0.25);
+  --white:#ffffff;--gray-100:#f2f2f8;--gray-200:#d4d4e0;--gray-300:#aaaabc;--gray-400:#9a9ab0;--gray-500:#7e7e96;
+  --green:#34d399;--green-dim:rgba(52,211,153,0.15);--red:#ef4444;--red-dim:rgba(239,68,68,0.15);
+  --orange:#f59e0b;--orange-dim:rgba(245,158,11,0.15);--blue:#60a5fa;--blue-dim:rgba(96,165,250,0.15);
+  --purple:#a884f6;--purple-dim:rgba(168,132,246,0.15);
+  --border:#333345;
+  --shadow-pink:0 4px 16px rgba(232,108,158,0.25);
+  --radius:20px;--radius-sm:14px;
+}
+body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--bg-deep);color:var(--gray-100);line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:480px;margin:0 auto;padding:0 20px;}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(17,17,24,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 20px;}
+.nav-inner{max-width:480px;margin:0 auto;display:flex;align-items:center;}
+.nav-logo{font-size:15px;font-weight:800;color:var(--pink);display:flex;align-items:center;gap:8px;}
+.nav-logo img{width:36px;height:36px;border-radius:50%;object-fit:contain;}
+
+/* HERO */
+.hero{text-align:center;padding:40px 0 24px;}
+.hero-character{width:96px;height:96px;margin:0 auto 16px;}
+.hero-character img{width:100%;height:100%;object-fit:contain;}
+.hero h1{font-size:32px;font-weight:900;color:var(--white);letter-spacing:-1px;line-height:1.3;}
+.hero-hl{color:var(--pink);}
+.hero-sub{font-size:15px;color:var(--gray-400);margin-top:10px;font-weight:500;}
+
+/* CTA */
+.cta-banner{text-align:center;padding:18px 0;}
+.cta-text{font-size:14px;color:var(--gray-400);font-weight:500;margin-bottom:10px;}
+.cta-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--pink);padding:11px 22px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;border:1.5px solid var(--pink);transition:all 0.2s;}
+.cta-btn:hover{background:var(--pink);color:var(--white);}
+.cta-btn img{width:28px;height:28px;border-radius:50%;object-fit:contain;}
+
+/* TABS */
+.main-tabs{display:flex;gap:8px;margin-bottom:24px;}
+.main-tab{flex:1;padding:12px 0;border-radius:14px;font-size:15px;font-weight:700;text-align:center;background:var(--bg-card);color:var(--gray-400);border:1.5px solid var(--border);cursor:pointer;font-family:inherit;transition:all 0.2s;}
+.main-tab.active{background:var(--pink);color:var(--white);border-color:var(--pink);box-shadow:var(--shadow-pink);}
+.tab-content{display:none;}.tab-content.active{display:block;}
+
+/* ===== 계산기 탭 ===== */
+.calc-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;margin-bottom:20px;}
+
+.calc-monthly-label{font-size:15px;font-weight:800;color:var(--white);margin-bottom:8px;}
+.calc-monthly-input-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.calc-monthly-input-wrap{flex:1;display:flex;align-items:center;background:var(--bg-elevated);border-radius:var(--radius-sm);padding:0 16px;border:1.5px solid var(--border);transition:border-color 0.2s;}
+.calc-monthly-input-wrap:focus-within{border-color:var(--pink);}
+.calc-monthly-input{flex:1;background:none;border:none;color:var(--white);font-family:inherit;font-size:26px;font-weight:900;padding:12px 0;outline:none;width:100%;}
+.calc-monthly-input::placeholder{color:var(--gray-500);font-size:18px;font-weight:400;}
+.calc-monthly-unit{font-size:15px;color:var(--gray-400);font-weight:600;}
+.calc-presets{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;}
+.calc-preset{padding:8px 14px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;color:var(--gray-400);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+.calc-preset.active{border-color:var(--pink);color:var(--pink);background:var(--pink-dim);}
+
+/* 기간 슬라이더 */
+.slider-section{margin-bottom:8px;}
+.slider-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.slider-label{font-size:15px;font-weight:800;color:var(--white);}
+.slider-value{font-size:22px;font-weight:900;color:var(--white);}
+.slider-value span{font-size:14px;color:var(--gray-400);font-weight:600;}
+
+input[type=range]{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:6px;border-radius:99px;
+  background:var(--bg-elevated);outline:none;cursor:pointer;
+  margin-bottom:8px;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:24px;height:24px;border-radius:50%;
+  background:var(--pink);border:3px solid var(--white);
+  box-shadow:0 2px 8px rgba(232,108,158,0.5);cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--pink);border:3px solid var(--white);cursor:pointer;
+}
+.slider-ticks{display:flex;justify-content:space-between;font-size:11px;color:var(--gray-500);font-weight:600;padding:0 2px;}
+
+.calc-warn{font-size:12px;color:var(--gray-500);margin-top:16px;line-height:1.6;padding-top:14px;border-top:1px solid var(--border);}
+
+/* 결과 카드들 */
+.results-section{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.result-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px;}
+.result-card.reached{border-color:var(--border);background:var(--bg-elevated);}
+
+.result-card-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.result-rank{width:32px;height:32px;border-radius:9px;background:var(--pink);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--white);flex-shrink:0;}
+.result-card.reached .result-rank{background:var(--pink);color:var(--white);}
+.result-name{font-size:17px;font-weight:800;color:var(--white);}
+.result-rate{font-size:12px;color:var(--gray-500);font-weight:500;margin-top:1px;}
+.result-card.reached .result-rate{color:var(--gray-400);}
+.result-amount-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:8px;}
+.result-amount{font-size:22px;font-weight:900;color:var(--pink);}
+.result-card.reached .result-amount{color:var(--pink);}
+.result-reach-badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--green-dim);color:var(--green);white-space:nowrap;}
+.result-reach-badge.not{background:var(--bg-elevated);color:var(--gray-500);}
+
+/* 바 */
+.result-bar-track{height:5px;background:var(--bg-elevated);border-radius:99px;overflow:hidden;}
+.result-bar-fill{height:100%;border-radius:99px;transition:width 0.4s ease;}
+.result-bar-fill.pink{background:var(--white);}
+.result-bar-fill.gray{background:var(--gray-500);}
+
+.result-detail{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--gray-500);font-weight:500;}
+
+/* ===== ETF 탭 ===== */
+.etf-cards{display:flex;flex-direction:column;gap:16px;}
+.etf-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.etf-card-top{padding:20px 20px 16px;}
+.etf-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.etf-ticker{font-size:22px;font-weight:900;color:var(--pink);}
+.etf-fullname{font-size:12px;color:var(--gray-500);margin-top:3px;font-weight:500;}
+.etf-rate-badge{text-align:right;flex-shrink:0;}
+.etf-rate-val{font-size:22px;font-weight:900;color:var(--white);}
+.etf-rate-label{font-size:11px;color:var(--gray-500);margin-top:2px;font-weight:600;}
+.etf-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.etf-tag{font-size:12px;padding:5px 10px;border-radius:7px;font-weight:600;}
+.tag-blue{background:var(--blue-dim);color:var(--blue);}
+.tag-purple{background:var(--purple-dim);color:var(--purple);}
+.tag-green{background:var(--green-dim);color:var(--green);}
+.tag-orange{background:var(--orange-dim);color:var(--orange);}
+.tag-red{background:var(--red-dim);color:var(--red);}
+.etf-summary{font-size:14px;color:var(--gray-300);line-height:1.75;}
+
+.etf-detail-block{padding:16px 20px;border-top:1px solid var(--border);}
+.etf-detail-label{font-size:11px;font-weight:700;color:var(--gray-500);margin-bottom:12px;letter-spacing:0.4px;text-transform:uppercase;}
+
+.holdings-list{display:flex;flex-direction:column;gap:8px;}
+.holding-item{display:flex;align-items:center;gap:10px;}
+.holding-name{font-size:13px;color:var(--gray-200);font-weight:500;width:160px;flex-shrink:0;}
+.holding-bar-track{flex:1;height:4px;background:var(--bg-elevated);border-radius:99px;overflow:hidden;}
+.holding-bar-fill{height:100%;background:var(--blue);border-radius:99px;}
+.holding-pct{font-size:13px;font-weight:700;color:var(--gray-400);width:36px;text-align:right;flex-shrink:0;}
+.holding-note{font-size:12px;color:var(--gray-500);margin-top:10px;line-height:1.6;}
+
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.stat-cell{background:var(--bg-elevated);border-radius:12px;padding:14px;}
+.stat-cell-label{font-size:11px;color:var(--gray-500);font-weight:600;margin-bottom:5px;}
+.stat-cell-val{font-size:17px;font-weight:800;}
+.val-green{color:var(--green);}
+.val-red{color:var(--red);}
+.val-orange{color:var(--orange);}
+.val-white{color:var(--gray-200);}
+
+.risk-list{display:flex;flex-direction:column;gap:10px;}
+.risk-item{font-size:14px;color:var(--gray-300);line-height:1.7;padding-left:16px;position:relative;}
+.risk-item::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--orange);}
+.risk-item.high::before{background:var(--red);}
+.risk-item.low::before{background:var(--green);}
+
+/* FOOTER */
+.footer{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:28px 0 40px;font-size:12px;color:var(--gray-500);line-height:1.7;}
+.footer strong{color:var(--gray-300);}
+.footer-date{margin-top:8px;font-size:11px;}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo"><img src="../img/heart.png" alt="">donbokee</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <div class="hero-character"><img src="../img/channel.png" alt="donbokee"></div>
+    <h1>월급으로 <span class="hero-hl">1억 만드는</span><br>ETF</h1>
+    <div class="hero-sub">ETF 제대로 알고 투자하자</div>
+  </div>
+
+  <div class="cta-banner">
+    <p class="cta-text">제대로 투자하고 싶다면</p>
+    <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn">
+      <img src="../img/hi.png" alt=""> @donbokee 팔로우
+    </a>
+  </div>
+
+  <div class="main-tabs">
+    <button class="main-tab active" onclick="switchTab('calc',this)">💰 수익 계산기</button>
+    <button class="main-tab" onclick="switchTab('etf',this)">📖 ETF 비교표</button>
+  </div>
+
+  <!-- 계산기 탭 -->
+  <div id="tab-calc" class="tab-content active">
+
+    <div class="calc-box">
+      <div class="calc-monthly-label">한 달에 얼마씩 모을 수 있어?</div>
+      <div class="slider-label-row" style="margin-bottom:12px;">
+        <div class="slider-label" style="font-size:13px;color:var(--gray-400);"></div>
+        <div class="slider-value"><span id="monthlyDisplay">50</span> <span>만원</span></div>
+      </div>
+      <input type="range" id="monthlySlider" min="10" max="500" value="50" step="10" oninput="onMonthlySlider(this.value)">
+      <div class="slider-ticks">
+        <span>10만</span><span>100만</span><span>200만</span><span>300만</span><span>400만</span><span>500만</span>
+      </div>
+
+      <div class="slider-section" style="margin-top:28px;">
+        <div class="slider-label-row">
+          <div class="slider-label">몇 년 동안 모을 거야?</div>
+          <div class="slider-value"><span id="yearDisplay">10</span> <span>년</span></div>
+        </div>
+        <input type="range" id="yearSlider" min="1" max="30" value="10" oninput="onSlider(this.value)">
+        <div class="slider-ticks">
+          <span>1년</span><span>5년</span><span>10년</span><span>15년</span><span>20년</span><span>25년</span><span>30년</span>
+        </div>
+      </div>
+
+      <div class="calc-warn">⚠️ 과거 연평균 수익률 기준 시뮬레이션이야. 실제 수익률은 시장 상황에 따라 크게 달라질 수 있어.</div>
+    </div>
+
+    <div class="results-section" id="resultsList"></div>
+
+    <div class="cta-banner">
+      <p class="cta-text">함께 공부하고 부자되고 싶다면</p>
+      <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn"><img src="../img/hi.png" alt=""> @donbokee 팔로우</a>
+    </div>
+  </div>
+
+  <!-- ETF 탭 -->
+  <div id="tab-etf" class="tab-content">
+    <div class="etf-cards" id="etfCards"></div>
+    <div class="cta-banner" style="margin-top:24px;">
+      <p class="cta-text">함께 공부하고 부자되고 싶다면</p>
+      <a href="https://www.instagram.com/donbokee/" target="_blank" class="cta-btn"><img src="../img/hi.png" alt=""> @donbokee 팔로우</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <strong>⚠️ 투자 유의사항</strong><br><br>
+    본 자료는 과거 연평균 수익률 기준 시뮬레이션이며, 투자를 권유하거나 추천하는 것이 아닙니다. 레버리지 ETF는 일반 ETF보다 훨씬 높은 위험이 있습니다. 실제 수익률은 시장 상황에 따라 크게 달라질 수 있으며, 모든 투자 판단과 책임은 본인에게 있습니다.
+    <div class="footer-date">※ 과거 연평균 수익률 기준 · 적립식 복리 계산</div>
+  </div>
+</div>
+
+<script>
+const etfs = [
+  {
+    id:'tqqq', name:'TQQQ', fullname:'ProShares UltraPro QQQ', rate:0.40, rateLabel:'연평균 약 40%',
+    tags:[{t:'나스닥 3배 레버리지',c:'tag-red'},{t:'초고위험',c:'tag-red'},{t:'고수익 가능',c:'tag-orange'}],
+    summary:'나스닥100 지수의 일일 수익률을 3배로 추종하는 레버리지 ETF야. 오를 때는 무섭게 오르지만 내릴 때도 3배로 빠져. 장기 보유 시 "변동성 손실" 때문에 단순히 3배가 되지 않아. 연평균 40%라는 숫자는 과거 강세장 기준이고, 횡보·하락장에선 크게 무너질 수 있어. 강심장 아니면 버티기 정말 힘든 종목이야.',
+    holdings:[{name:'애플 (AAPL)',pct:12.5},{name:'엔비디아 (NVDA)',pct:11.8},{name:'마이크로소프트 (MSFT)',pct:10.2},{name:'메타 (META)',pct:7.1},{name:'아마존 (AMZN)',pct:6.8}],
+    holdingNote:'나스닥100 상위 종목을 3배 레버리지로 추종해. 개별 종목을 직접 보유하는 게 아니라 스왑 계약을 통해 레버리지를 만드는 구조야.',
+    stats:[{label:'연평균 수익률 (추정)',val:'~40%',cls:'val-green'},{label:'최악의 해 (2022)',val:'-79.8%',cls:'val-red'},{label:'총 보수',val:'0.88%',cls:'val-white'},{label:'레버리지 배수',val:'3배',cls:'val-orange'}],
+    risks:[{text:'2022년에 -79.8% 폭락. 원금의 80%가 사라진 거야. 회복에 몇 년이 걸렸어.',level:'high'},{text:'매일 리셋되는 구조라 횡보·하락장에서 "변동성 손실"이 누적돼.',level:'high'},{text:'단기 트레이딩용으로 설계된 상품이야. 장기 보유는 설계 의도와 다른 결과를 낳을 수 있어.',level:'high'},{text:'총 보수 0.88%로 일반 ETF 대비 매우 높아.',level:''}]
+  },
+  {
+    id:'smh', name:'SMH', fullname:'VanEck Semiconductor ETF', rate:0.32, rateLabel:'10년 연평균 약 32%',
+    tags:[{t:'반도체',c:'tag-blue'},{t:'AI 핵심',c:'tag-purple'},{t:'고성장',c:'tag-green'}],
+    summary:'AI 시대의 핵심 인프라인 반도체에 투자하는 ETF야. 전 세계 반도체 기업 25개를 집중해서 담아. AI 칩 수요 폭발로 최근 10년 수익률이 S&P500을 크게 앞질렀어. 다만 반도체 업황은 사이클이 있어서 꺾일 때 낙폭도 꽤 커.',
+    holdings:[{name:'엔비디아 (NVDA)',pct:19.8},{name:'TSMC (TSM)',pct:14.2},{name:'ASML (ASML)',pct:7.9},{name:'브로드컴 (AVGO)',pct:7.5},{name:'퀄컴 (QCOM)',pct:4.8}],
+    holdingNote:'전 세계 반도체 설계·제조·장비 기업을 망라해. 엔비디아가 약 20% 비중이라 엔비디아 실적에 크게 연동돼.',
+    stats:[{label:'10년 연평균 수익률',val:'~32%',cls:'val-green'},{label:'최악의 해 (2022)',val:'-33.5%',cls:'val-red'},{label:'총 보수',val:'0.35%',cls:'val-white'},{label:'보유 종목 수',val:'25개',cls:'val-white'}],
+    risks:[{text:'반도체 업황은 2~3년 주기 사이클이 있어. 2022년에 -33.5% 빠졌어.',level:''},{text:'엔비디아 단일 종목 비중이 약 20%라 엔비디아가 흔들리면 ETF 전체가 흔들려.',level:''},{text:'AI 투자 열기가 식으면 직격탄을 맞을 수 있어.',level:''}]
+  },
+  {
+    id:'qld', name:'QLD', fullname:'ProShares Ultra QQQ', rate:0.28, rateLabel:'연평균 약 28%',
+    tags:[{t:'나스닥 2배',c:'tag-orange'},{t:'레버리지',c:'tag-purple'},{t:'중고위험',c:'tag-orange'}],
+    summary:'나스닥100 지수를 2배로 추종하는 레버리지 ETF야. TQQQ(3배)보다는 덜 극단적이지만 일반 ETF보다 훨씬 변동성이 커. 빅테크 강세일 때 강하고, 기술주가 흔들릴 때 2배로 빠져.',
+    holdings:[{name:'애플 (AAPL)',pct:12.5},{name:'엔비디아 (NVDA)',pct:11.8},{name:'마이크로소프트 (MSFT)',pct:10.2},{name:'메타 (META)',pct:7.1},{name:'아마존 (AMZN)',pct:6.8}],
+    holdingNote:'나스닥100 구성 종목과 동일하지만 스왑을 통해 2배 레버리지를 구현해. 직접 종목을 2배 보유하는 게 아니야.',
+    stats:[{label:'연평균 수익률 (추정)',val:'~28%',cls:'val-green'},{label:'최악의 해 (2022)',val:'-62.4%',cls:'val-red'},{label:'총 보수',val:'0.95%',cls:'val-white'},{label:'레버리지 배수',val:'2배',cls:'val-orange'}],
+    risks:[{text:'2022년에 -62.4% 하락. -50% 빠지면 회복하려면 +100%가 필요해. 레버리지 손실은 비대칭이야.',level:'high'},{text:'횡보장에서 변동성 손실이 누적돼. 지수가 제자리여도 ETF 가치는 계속 줄어들 수 있어.',level:'high'},{text:'총 보수 0.95%로 높은 편이야.',level:''}]
+  },
+  {
+    id:'qqq', name:'QQQ', fullname:'Invesco Nasdaq-100 ETF', rate:0.20, rateLabel:'10년 연평균 약 20%',
+    tags:[{t:'나스닥100',c:'tag-blue'},{t:'빅테크',c:'tag-purple'},{t:'성장형',c:'tag-green'}],
+    summary:'미국 나스닥 거래소 비금융 상위 100개 기업에 투자하는 ETF야. S&P500 다음으로 가장 널리 알려진 ETF고, 애플·엔비디아·마이크로소프트 같은 빅테크가 주축이야. "미국 기술 패권에 투자하는 것"이라 보면 돼.',
+    holdings:[{name:'애플 (AAPL)',pct:12.5},{name:'엔비디아 (NVDA)',pct:11.8},{name:'마이크로소프트 (MSFT)',pct:10.2},{name:'메타 (META)',pct:7.1},{name:'아마존 (AMZN)',pct:6.8}],
+    holdingNote:'상위 10개 종목이 전체의 약 50% 이상을 차지해. 빅테크 쏠림이 심하지만 그만큼 강한 기업들만 모아놓은 거야.',
+    stats:[{label:'10년 연평균 수익률',val:'~20%',cls:'val-green'},{label:'최악의 해 (2022)',val:'-32.6%',cls:'val-red'},{label:'총 보수',val:'0.20%',cls:'val-white'},{label:'보유 종목 수',val:'100개',cls:'val-white'}],
+    risks:[{text:'상위 10개 종목이 절반 이상이라 분산 효과가 생각보다 적어.',level:''},{text:'기술주 규제, 금리 인상 이슈에 민감하게 반응해.',level:''},{text:'워낙 유명한 ETF라 과열 구간에서 진입하기 쉬워.',level:''}]
+  },
+  {
+    id:'voo', name:'VOO', fullname:'Vanguard S&P 500 ETF', rate:0.146, rateLabel:'10년 연평균 약 14.6%',
+    tags:[{t:'S&P500',c:'tag-green'},{t:'분산투자',c:'tag-blue'},{t:'초저보수',c:'tag-green'}],
+    summary:'미국 S&P500 지수를 추종하는 ETF야. 미국 대형주 500개에 분산 투자하는 가장 기본적이고 검증된 방법이야. 워런 버핏도 "일반인은 그냥 S&P500 인덱스 펀드를 사라"고 했을 정도야. 수익률은 상위 ETF보다 낮지만 안정성과 신뢰도는 최고야.',
+    holdings:[{name:'애플 (AAPL)',pct:7.1},{name:'마이크로소프트 (MSFT)',pct:6.4},{name:'엔비디아 (NVDA)',pct:6.1},{name:'아마존 (AMZN)',pct:3.8},{name:'메타 (META)',pct:2.9}],
+    holdingNote:'미국 시가총액 상위 500개 기업을 담아. 기술주만이 아니라 금융·헬스케어·소비재·에너지 등 다양한 섹터가 포함돼 있어.',
+    stats:[{label:'10년 연평균 수익률',val:'~14.6%',cls:'val-green'},{label:'최악의 해 (2022)',val:'-18.2%',cls:'val-red'},{label:'총 보수',val:'0.03%',cls:'val-white'},{label:'보유 종목 수',val:'500개+',cls:'val-white'}],
+    risks:[{text:'글로벌 경기침체엔 같이 빠져. 2022년에도 -18% 하락했어.',level:'low'},{text:'상위 ETF들보다 수익률이 낮아서 장기 복리 효과 차이가 상당히 커.',level:'low'}]
+  },
+  {
+    id:'vti', name:'VTI', fullname:'Vanguard Total Stock Market ETF', rate:0.135, rateLabel:'10년 연평균 약 13.5%',
+    tags:[{t:'미국 전체',c:'tag-green'},{t:'초분산',c:'tag-blue'},{t:'초저보수',c:'tag-green'}],
+    summary:'미국 주식 시장 전체를 통째로 담는 ETF야. S&P500(VOO)이 대형주 500개라면, VTI는 중소형주까지 포함한 약 3,700개 기업에 투자해. 미국 경제 전체에 베팅하는 거야.',
+    holdings:[{name:'애플 (AAPL)',pct:6.5},{name:'마이크로소프트 (MSFT)',pct:5.9},{name:'엔비디아 (NVDA)',pct:5.6},{name:'아마존 (AMZN)',pct:3.5},{name:'메타 (META)',pct:2.7}],
+    holdingNote:'약 3,700개 미국 기업을 보유. 대형주가 대부분의 비중을 차지하지만, 중소형 성장주도 포함돼 있어.',
+    stats:[{label:'10년 연평균 수익률',val:'~13.5%',cls:'val-green'},{label:'최악의 해 (2022)',val:'-19.5%',cls:'val-red'},{label:'총 보수',val:'0.03%',cls:'val-white'},{label:'보유 종목 수',val:'~3,700개',cls:'val-white'}],
+    risks:[{text:'VOO와 수익률이 비슷하고 구성도 유사해서 VOO가 있다면 중복투자일 수 있어.',level:'low'},{text:'미국 시장에만 집중돼 있어서 글로벌 분산은 안 돼.',level:'low'}]
+  },
+  {
+    id:'schd', name:'SCHD', fullname:'Schwab U.S. Dividend Equity ETF', rate:0.12, rateLabel:'10년 연평균 약 12%',
+    tags:[{t:'배당성장',c:'tag-orange'},{t:'안정형',c:'tag-green'},{t:'저변동성',c:'tag-blue'}],
+    summary:'배당을 꾸준히 늘려온 미국 우량 기업 100개에 투자하는 ETF야. 주가 상승뿐 아니라 매 분기 배당도 받아. 시장이 흔들릴 때 상대적으로 안정적이야. 배당을 재투자하면 복리 효과가 강력해.',
+    holdings:[{name:'텍사스인스트루먼트 (TXN)',pct:4.5},{name:'홈디포 (HD)',pct:4.3},{name:'블랙록 (BLK)',pct:4.2},{name:'코카콜라 (KO)',pct:4.1},{name:'버라이즌 (VZ)',pct:4.0}],
+    holdingNote:'10년 이상 배당을 꾸준히 지급한 기업들 위주야. 기술주보다는 전통 우량 기업이 많아. 배당수익률은 연 3~4% 수준이야.',
+    stats:[{label:'10년 연평균 수익률',val:'~12%',cls:'val-green'},{label:'최악의 해 (2022)',val:'-5.5%',cls:'val-red'},{label:'총 보수',val:'0.06%',cls:'val-white'},{label:'배당수익률',val:'~3.5%',cls:'val-orange'}],
+    risks:[{text:'성장주 중심 ETF보다 장기 수익률이 낮아.',level:'low'},{text:'금리가 높아지면 배당주의 매력이 상대적으로 떨어져.',level:''},{text:'배당을 재투자하지 않으면 복리 효과가 절반으로 줄어.',level:''}]
+  },
+  {
+    id:'jepi', name:'JEPI', fullname:'JPMorgan Equity Premium Income ETF', rate:0.085, rateLabel:'연평균 약 8.5%',
+    tags:[{t:'월배당',c:'tag-orange'},{t:'커버드콜',c:'tag-purple'},{t:'안정형',c:'tag-green'}],
+    summary:'매달 배당을 지급하는 ETF야. S&P500 종목 + 커버드콜 전략으로 매달 현금흐름을 만들어내. 배당수익률이 연 7~9%로 매우 높지만, 그만큼 주가 상승 수익을 일부 포기하는 구조야. 자산을 불리는 것보다 현금흐름이 필요한 사람에게 맞아.',
+    holdings:[{name:'아마존 (AMZN)',pct:2.0},{name:'마이크로소프트 (MSFT)',pct:1.9},{name:'메타 (META)',pct:1.8},{name:'비자 (V)',pct:1.8},{name:'JP모건 (JPM)',pct:1.7}],
+    holdingNote:'S&P500 종목 100여 개를 보유하면서 옵션(커버드콜)을 매도해 프리미엄을 받아 배당으로 지급해.',
+    stats:[{label:'연평균 수익률 (추정)',val:'~8.5%',cls:'val-green'},{label:'최악의 해 (2022)',val:'-13.7%',cls:'val-red'},{label:'총 보수',val:'0.35%',cls:'val-white'},{label:'배당수익률',val:'~7~9%',cls:'val-orange'}],
+    risks:[{text:'커버드콜 구조상 주가가 크게 오를 때 수익이 제한돼. 강세장에서 다른 ETF보다 수익률이 낮아.',level:''},{text:'높은 배당수익률은 자산 성장을 희생하는 거야. 1억 모으는 데 다른 ETF보다 훨씬 오래 걸려.',level:''},{text:'매달 배당금에 세금이 붙어. 세후 실질 배당수익률이 낮아질 수 있어.',level:''}]
+  }
+];
+
+// ===== 탭 전환 =====
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ===== 계산기 =====
+function onMonthlySlider(val) {
+  document.getElementById('monthlyDisplay').textContent = parseInt(val);
+  updateResults();
+}
+
+function onSlider(val) {
+  document.getElementById('yearDisplay').textContent = val;
+  updateResults();
+}
+
+function calcFinalMan(moMan, years, rate) {
+  const monthly = moMan * 10000;
+  const mr = Math.pow(1 + rate, 1/12) - 1;
+  let total = 0;
+  for (let i = 0; i < years * 12; i++) total = (total + monthly) * (1 + mr);
+  return Math.round(total / 10000);
+}
+
+function fmtMan(man) {
+  if (man >= 10000) {
+    const uk = Math.floor(man / 10000), rem = Math.round(man % 10000);
+    return rem > 0 ? `${uk}억 ${rem.toLocaleString()}만원` : `${uk}억원`;
+  }
+  return `${Math.round(man).toLocaleString()}만원`;
+}
+
+function updateResults() {
+  const mo = parseFloat(document.getElementById('monthlySlider').value);
+  const years = parseInt(document.getElementById('yearSlider').value);
+
+  if (!mo || mo <= 0) {
+    document.getElementById('resultsList').innerHTML = '<div style="text-align:center;padding:32px 0;color:var(--gray-500);font-size:14px;font-weight:600;">월 적립액을 입력하면<br>ETF별 결과가 여기 나와</div>';
+    return;
+  }
+
+  const results = etfs.map(e => {
+    const final = calcFinalMan(mo, years, e.rate);
+    const invest = Math.round(mo * years * 12);
+    const profit = final - invest;
+    const reached = final >= 10000; // 1억 = 10000만원
+    return { ...e, final, invest, profit, reached };
+  }).sort((a, b) => b.final - a.final);
+
+  const maxFinal = results[0].final;
+
+  document.getElementById('resultsList').innerHTML = results.map((r, i) => {
+    const barPct = Math.round((r.final / maxFinal) * 100);
+    const isTop = i === 0;
+    return `
+    <div class="result-card${isTop ? ' reached' : r.reached ? ' reached' : ''}">
+      <div class="result-card-top">
+        <div class="result-rank">${i + 1}</div>
+        <div style="flex:1;">
+          <div class="result-name">${r.name}</div>
+          <div class="result-rate">${r.rateLabel}</div>
+        </div>
+        <div class="result-reach-badge${r.reached ? '' : ' not'}">${r.reached ? '1억 달성' : '1억 미달'}</div>
+      </div>
+      <div class="result-amount-row">
+        <div class="result-amount">${fmtMan(r.final)}</div>
+      </div>
+      <div class="result-bar-track">
+        <div class="result-bar-fill ${isTop || r.reached ? 'pink' : 'gray'}" style="width:${barPct}%"></div>
+      </div>
+      <div class="result-detail">
+        <span>원금 ${fmtMan(r.invest)}</span>
+        <span>수익 +${fmtMan(r.profit)}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===== ETF 카드 렌더 =====
+function renderEtfCards() {
+  document.getElementById('etfCards').innerHTML = etfs.map(e => {
+    const maxPct = e.holdings[0].pct;
+    return `
+    <div class="etf-card">
+      <div class="etf-card-top">
+        <div class="etf-card-head">
+          <div>
+            <div class="etf-ticker">${e.name}</div>
+            <div class="etf-fullname">${e.fullname}</div>
+          </div>
+          <div class="etf-rate-badge">
+            <div class="etf-rate-val">${Math.round(e.rate * 100)}%</div>
+            <div class="etf-rate-label">연평균 수익률</div>
+          </div>
+        </div>
+        <div class="etf-tags">${e.tags.map(t => `<span class="etf-tag ${t.c}">${t.t}</span>`).join('')}</div>
+        <div class="etf-summary">${e.summary}</div>
+      </div>
+      <div class="etf-detail-block">
+        <div class="etf-detail-label">주요 보유 종목 (상위 5개)</div>
+        <div class="holdings-list">
+          ${e.holdings.map(h => `
+          <div class="holding-item">
+            <div class="holding-name">${h.name}</div>
+            <div class="holding-bar-track"><div class="holding-bar-fill" style="width:${Math.round(h.pct/maxPct*100)}%"></div></div>
+            <div class="holding-pct">${h.pct}%</div>
+          </div>`).join('')}
+        </div>
+        <div class="holding-note">${e.holdingNote}</div>
+      </div>
+      <div class="etf-detail-block">
+        <div class="etf-detail-label">핵심 데이터</div>
+        <div class="stat-grid">
+          ${e.stats.map(s => `
+          <div class="stat-cell">
+            <div class="stat-cell-label">${s.label}</div>
+            <div class="stat-cell-val ${s.cls}">${s.val}</div>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div class="etf-detail-block">
+        <div class="etf-detail-label">알아야 할 위험</div>
+        <div class="risk-list">
+          ${e.risks.map(r => `<div class="risk-item ${r.level}">${r.text}</div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  renderEtfCards();
+  updateResults();
+});
+</script>
+</body>
+</html>
